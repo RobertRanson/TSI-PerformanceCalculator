@@ -1,0 +1,2 @@
+DBExecuteSQL.prepareSqlStatementFromList,An error occurred{[SQLITE_ERROR] SQL error or missing database (near "?": syntax error)DBExecuteSQL.prepareSqlStatementFromList,With command{INSERT INTO customer(emailAddressfirstNamelastNamepassword) VALUES(????); 
+DBExecuteSQL.prepareSqlStatementFromList,An error occurred{[SQLITE_CONSTRAINT]  Abort due to constraint violation (UNIQUE constraint failed: customer.emailAddress)DBExecuteSQL.prepareSqlStatementFromList,With command{INSERT INTO customer(emailAddress, firstName, lastName, password) VALUES(?, ?, ?, ?); 
