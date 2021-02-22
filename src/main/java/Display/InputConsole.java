@@ -8,7 +8,7 @@ import java.util.Scanner;
 import static AppDataSource.DataSourceConstants.INPUT_LOG;
 import static AppDataSource.DataSourceConstants.USERACTION_FOLDER;
 
-public class InputConsole extends InputInterface {
+public class InputConsole extends InputInt {
     private Scanner userInput = new Scanner(System.in);
     private boolean inputToFile = false;
 

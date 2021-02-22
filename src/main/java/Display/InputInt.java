@@ -1,6 +1,6 @@
 package Display;
 
-public abstract class InputInterface {
+public abstract class InputInt {
 
     public abstract String getInputString();
 

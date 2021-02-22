@@ -6,7 +6,7 @@ import Entities.Customer;
 public class LogIn {
 
     Display.OutputInterface output = new Display.OutputConsole();
-    Display.InputInterface input = new Display.InputConsole();
+    Display.InputInt input = new Display.InputConsole();
 
     public void setOutput(Display.OutputInterface output,boolean outputWriteToFile, boolean appendToFile){
         if (outputWriteToFile) {
@@ -15,7 +15,7 @@ public class LogIn {
         this.output = output;
     }
 
-    public void setInput(Display.InputInterface input,boolean inputWriteToFile, boolean appendToFile){
+    public void setInput(Display.InputInt input,boolean inputWriteToFile, boolean appendToFile){
         if (inputWriteToFile) {
             input.setInputToFile( inputWriteToFile , appendToFile);
         }
