@@ -28,5 +28,6 @@ public class LogIn {
         input.setInputToFile(true, false);
         String result = input.getInputString();
         System.out.println(result);
+        System.out.println("Check if user exists and has same password");
     }
 }
