@@ -2,6 +2,7 @@ package Engine;
 
 import AppDataSource.DBSetup;
 import Entities.Customer;
+import EntitiesDataSourceMapping.CustomerDatabaseMapping;
 
 public class LogIn {
 
@@ -23,11 +24,13 @@ public class LogIn {
     }
 
     public void logIn(){
+        CustomerDatabaseMapping customerDatabaseMapping = new CustomerDatabaseMapping();
         output.setOutputToFile(true, false);
-        output.output("Enter email address and password");
+        output.output("Enter email address?");
         input.setInputToFile(true, false);
         String result = input.getInputString();
-        System.out.println(result);
+        Customer customer = customerDatabaseMapping.getCustomerFromEmail(result);
+        System.out.println(customer.getPassword());
         System.out.println("Check if user exists and has same password");
     }
 }

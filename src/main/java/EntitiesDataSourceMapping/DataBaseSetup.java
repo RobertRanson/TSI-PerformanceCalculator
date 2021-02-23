@@ -10,7 +10,7 @@ public class DataBaseSetup {
 
     public DataBaseSetup(){
         this.dbSetup = new DBSetup();
-        this.customerDatabaseMapping = new CustomerDatabaseMapping(this.dbSetup);
+        this.customerDatabaseMapping = new CustomerDatabaseMapping();
     }
 
     public void setup() {
