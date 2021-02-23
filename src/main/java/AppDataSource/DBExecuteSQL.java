@@ -1,13 +1,10 @@
 package AppDataSource;
 import Utilities.ErrorLogging;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
-#New Test Comment
 public class DBExecuteSQL {
 
         private DBConnection dbConnector = DBConnection.getInstance();
@@ -32,13 +29,14 @@ public class DBExecuteSQL {
                         try {
                                 this.connection = this.dbConnector.create_connection();
                         } catch (Exception sqlExp) {
-                                this.errorLogging.writeToLog("DBExecureSQL.getConnection", sqlExp.getMessage());
+                                this.errorLogging.writeToLog("DBExecuteSQL.getConnection", sqlExp.getMessage());
                         }
                 }
                 return this.connection;
         }
 
         public void executeSQLCommand(String sqlCommand) {
+                //this.errorLogging.writeToLog("DBExecuteSQL.executeSQLCommand", "To attempt:" + sqlCommand);
                 try {
                         Statement statement = this.getConnection().createStatement();
                         statement.execute(sqlCommand);
@@ -46,6 +44,58 @@ public class DBExecuteSQL {
                         this.errorLogging.writeToLog("DBExecuteSQL.executeSQLCommand", "An error occurred{" + sqlExp.getMessage());
                         this.errorLogging.writeToLog("DBExecuteSQL.executeSQLCommand", "With command{" + sqlCommand);
                 }
+        }
+
+        private ResultSet executeSQLQuery(String sqlCommand) {
+                ResultSet resultSet = null;
+                try {
+                        Statement statement = this.getConnection().createStatement();
+                        resultSet = statement.executeQuery(sqlCommand);
+                } catch (Exception sqlExp) {
+                        this.errorLogging.writeToLog("DBExecuteSQL.executeSQLCommand", "An error occurred{" + sqlExp.getMessage());
+                        this.errorLogging.writeToLog("DBExecuteSQL.executeSQLCommand", "With command{" + sqlCommand);
+                }
+                return resultSet;
+        }
+
+        private List<List<String>> getDataFromTable(ResultSet resultSet, String tableName, String[] columnNames) {
+                List<List<String>> queryData = new ArrayList<List<String>>();
+                ArrayList<String> queryRow = new ArrayList<String>();
+                try {
+                        while (resultSet.next()) {
+                                queryRow = new ArrayList<String>();;
+                                for (String columnName:columnNames){
+                                        queryRow.add(resultSet.getString(columnName));
+                                }
+                                queryData.add(queryRow);
+                        }
+                } catch (SQLException e) {
+                        throw new Error("Problem", e);
+                }
+                return queryData;
+        }
+
+        private String getSelectQuery(String tableName, String[] columnNames, String filter){
+                String query = "select ";
+                int counter = 0;
+                String primaryKey = "";
+                for (String column : columnNames){
+                        if (counter == 0) {
+                                primaryKey = column;
+                                query += column;
+                        } else {
+                                query += ", " + column;
+                        }
+                        counter += 1;
+                }
+                query += " from " + tableName + " where " + primaryKey + " = \"" + filter + "\"";
+                return query;
+        }
+
+        public List<List<String>> getDataFromTable( String tableName, String[] columnNames, String filter) {
+                ResultSet resultSet = executeSQLQuery(getSelectQuery(tableName,columnNames,filter));
+                List<List<String>> queryData = getDataFromTable(resultSet,tableName,columnNames);
+                return queryData;
         }
 
         private PreparedStatement prepareSqlStatementFromList(String sqlCommand, List<String[]> dataRows) {
@@ -57,8 +107,8 @@ public class DBExecuteSQL {
                         }
                         preparedStatement.executeUpdate();
                 } catch (Exception sqlExp) {
-                        this.errorLogging.writeToLog("DBExecuteSQL.prepareSqlStatementFromList", "An error occurred{" + sqlExp.getMessage());
-                        this.errorLogging.writeToLog("DBExecuteSQL.prepareSqlStatementFromList", "With command{" + sqlCommand);
+                        this.errorLogging.writeToLog("DBExecuteSQL.prepareSqlStatementFromList", "An error occurred:" + sqlExp.getMessage());
+                        this.errorLogging.writeToLog("DBExecuteSQL.prepareSqlStatementFromList", "With command:" + sqlCommand);
                 }
                 return preparedStatement;
         }
@@ -80,7 +130,7 @@ public class DBExecuteSQL {
                                 counter += 1;
                         }
                 } catch (Exception sqlExp) {
-                        this.errorLogging.writeToLog("DBExecuteSQL.prepareSqlStatement", "An error occurred{" + sqlExp.getMessage());
+                        this.errorLogging.writeToLog("DBExecuteSQL.prepareSqlStatement", "An error occurred:" + sqlExp.getMessage());
                 }
                 return preparedStatement;
         }
@@ -90,12 +140,12 @@ public class DBExecuteSQL {
                 try {
                         this.prepareSqlStatementFromList(sqlCommand, dataRows);
                 } catch (Exception sqlExp) {
-                        this.errorLogging.writeToLog("DBExecuteSQL.insertData", "An error occurred{" + sqlExp.getMessage());
+                        this.errorLogging.writeToLog("DBExecuteSQL.insertData", "An error occurred:" + sqlExp.getMessage());
                         throw sqlExp;
                 }
         }
 
-        //private String{] getListOfTables() {
+        //private String[] getListOfTables() {
         //        return this.executeSqlSelect("SELECT name FROM sqlite_master WHERE type='table';");
         //}
 
