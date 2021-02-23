@@ -27,5 +27,6 @@ public class LogIn {
         output.output("Enter email address and password");
         input.setInputToFile(true, false);
         String result = input.getInputString();
+        System.out.println(result);
     }
 }
