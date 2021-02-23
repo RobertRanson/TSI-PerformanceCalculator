@@ -80,8 +80,6 @@ public class DBSetup {
         return sqlInsert;
     }
 
-
-
     public void populateEntity(String sqlCommand, List<String[]> dataRows){
         this.dbExecuteSQL.insertData(sqlCommand,dataRows);
     }
