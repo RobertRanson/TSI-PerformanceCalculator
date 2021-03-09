@@ -20,7 +20,7 @@ public class LogIn {
         if (inputWriteToFile) {
             input.setInputToFile( inputWriteToFile , appendToFile);
         }
-        this.output = output;
+        this.input = input;
     }
 
     public void logIn(){
