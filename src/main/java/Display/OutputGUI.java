@@ -10,7 +10,10 @@ import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-public class OutputGUI extends JPanel {
+import static AppDataSource.DataSourceConstants.OUTPUT_LOG;
+import static AppDataSource.DataSourceConstants.USERACTION_FOLDER;
+
+public class OutputGUI extends JPanel implements OutputInterface {
     private static final int N_ROWS = 1;
     private static String[] header = {"Type", "Instruction Count", "CPI", "Execution Time"};
     private DefaultTableModel dtm = new DefaultTableModel(null, header) {
@@ -20,21 +23,24 @@ public class OutputGUI extends JPanel {
             return getValueAt(0, col).getClass();
         }
     };
+
     private JTable table = new JTable(dtm);
     private JScrollPane scrollPane = new JScrollPane(table);
     private JScrollBar vScroll = scrollPane.getVerticalScrollBar();
     private int row;
     private boolean isAutoScroll;
+    private  boolean outputToFile = false;
+    private  AppDataSource.WriteToFile outputFile;
 
 
-    public static void DisplayOutput(Program program){
+    public void DisplayOutput(Program program, boolean outputToFile, boolean appendToFile){
         EventQueue.invokeLater(new Runnable() {
 
             @Override
             public void run() {
                 JFrame f = new JFrame();
                 f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                OutputGUI nlt = new OutputGUI(program);
+                OutputGUI nlt = new OutputGUI(program, outputToFile, appendToFile);
                 f.add(nlt);
                 f.pack();
                 f.setLocationRelativeTo(null);
@@ -43,11 +49,16 @@ public class OutputGUI extends JPanel {
         });
     }
 
+    public OutputGUI(){}
 
-    public OutputGUI(Program program) {
+    public OutputGUI(Program program, boolean outputToFile, boolean appendToFile) {
+
+        setOutputToFile(outputToFile,appendToFile);
+
         this.setLayout(new BorderLayout());
         Dimension d = new Dimension(800, N_ROWS * table.getRowHeight() + 100);
         table.setPreferredScrollableViewportSize(d);
+
         for (InstructionType inst : program.getInstructions()) {
             dtm.addRow(new Object[]{
                     inst.getType(),
@@ -56,8 +67,8 @@ public class OutputGUI extends JPanel {
                     inst.getExecutionTime()
             });
         }
-        scrollPane.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         vScroll.addAdjustmentListener(new AdjustmentListener() {
 
             @Override
@@ -89,5 +100,26 @@ public class OutputGUI extends JPanel {
         results.setAlignmentX(Component.CENTER_ALIGNMENT);
         results.setBorder(BorderFactory.createTitledBorder("RESULTS"));
         this.add(results, BorderLayout.SOUTH);
+
+        //Write to file
+        output(Logic.calculateAverageCPI(program)+",");
+        output(Logic.calculateMipsRate(program)+",");
+        output(Logic.calculateExecutionTime(program)+",");
+        output("\n");
+    }
+
+    @Override
+    public void setOutputToFile(boolean outputToFile, boolean appendToFile) {
+        if (outputToFile) {
+            outputFile = new AppDataSource.WriteToFile(USERACTION_FOLDER, OUTPUT_LOG, appendToFile);
+            this.outputToFile = outputToFile;
+        }
+    }
+
+    @Override
+    public void output(String message) {
+        if (outputToFile) {
+            outputFile.write(message);
+        }
     }
 }

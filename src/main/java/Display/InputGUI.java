@@ -1,5 +1,6 @@
 package Display;
 
+import Engine.RunCalculator;
 import Entities.Frequency;
 import Entities.InstructionType;
 import Engine.Logic;
@@ -13,7 +14,10 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 
-public class InputGUI extends JPanel {
+
+import static AppDataSource.DataSourceConstants.*;
+
+public class InputGUI extends JPanel implements InputInterface {
 
     private static final int N_ROWS = 1;
     private static String[] header = {"Type", "Instruction Count", "CPI", "Include in calculation"};
@@ -29,16 +33,18 @@ public class InputGUI extends JPanel {
     private JScrollBar vScroll = scrollPane.getVerticalScrollBar();
     private int row;
     private boolean isAutoScroll;
+    private Program allData;
+    private boolean inputToFile;
+    private AppDataSource.WriteToFile inputFile;
 
     public InputGUI() {
         this.setLayout(new BorderLayout());
         Dimension d = new Dimension(800, N_ROWS * table.getRowHeight() + 100);
+
         table.setPreferredScrollableViewportSize(d);
-        for (int i = 0; i < N_ROWS; i++) {
-            addRow();
-        }
-        scrollPane.setVerticalScrollBarPolicy(
-                JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        for (int i = 0; i < N_ROWS; i++) { addRow(); }
+
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         vScroll.addAdjustmentListener(new AdjustmentListener() {
 
             @Override
@@ -50,7 +56,7 @@ public class InputGUI extends JPanel {
 
         JPanel cpuinformation = new JPanel();
         cpuinformation.add(new JLabel("Clock Frequency: "));
-        JTextField clockFrequency = new JTextField("0",5);
+        JTextField clockFrequency = new JTextField("0", 5);
         cpuinformation.add(clockFrequency);
 
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -95,43 +101,54 @@ public class InputGUI extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-//                System.out.println(table.getModel().getValueAt(0,3));
+
+                //File writer.
+                getInputString(clockFrequency.getText() + ",");
+                getInputString(buttonGroup.getSelection().getActionCommand() + ",");
+
                 ArrayList<InstructionType> instructionTypes = new ArrayList<>();
-                System.out.println("Rows: " + row);
-                for (int i = 0; i < row+1; i++) {
-                    boolean checkBox = (boolean) table.getModel().getValueAt(i,3);
-//                    System.out.println((Integer) table.getModel().getValueAt(i,1));
-                    if(checkBox){
+
+                for (int i = 0; i < row + 1; i++) {
+                    boolean checkBox = (boolean) table.getModel().getValueAt(i, 3);
+                    if (checkBox) {
+
+                        //File Writer
+                        getInputString(String.valueOf(table.getModel().getValueAt(i, 0)) + ",");
+                        getInputString(String.valueOf(table.getModel().getValueAt(i, 1)) + ",");
+                        getInputString(String.valueOf(table.getModel().getValueAt(i, 2)));
+
                         instructionTypes.add(new InstructionType(
-                                String.valueOf(table.getModel().getValueAt(i,0)),
-                                (Integer) table.getModel().getValueAt(i,1),
-                                (Integer) table.getModel().getValueAt(i,2)));
+                                String.valueOf(table.getModel().getValueAt(i, 0)),
+                                (Integer) table.getModel().getValueAt(i, 1),
+                                (Integer) table.getModel().getValueAt(i, 2)));
                     }
                 }
+                getInputString("\n");
                 Program program = new Program(
                         Float.valueOf(clockFrequency.getText()),
                         Frequency.valueOf(buttonGroup.getSelection().getActionCommand()),
                         instructionTypes);
 
+
                 System.out.println(program.toString());
                 System.out.println("CPI: " + Logic.calculateAverageCPI(program));
                 System.out.println("MIPS: " + Logic.calculateMipsRate(program));
-                OutputGUI.DisplayOutput(program);
+                System.out.println("Execution Time: " + Logic.calculateExecutionTime(program));
+                allData = program;
 
+                OutputInterface output = new OutputGUI();
+                output.DisplayOutput(program, true, true);
             }
         }));
         this.add(panel, BorderLayout.SOUTH);
 
 
-
-
     }
 
     private void addRow() {
-
         dtm.addRow(new Object[]{
                 String.valueOf("Type"),
-                Integer.valueOf(row*1000),
+                Integer.valueOf(row * 1000),
                 Integer.valueOf(row),
                 Boolean.valueOf(false)
         });
@@ -151,5 +168,32 @@ public class InputGUI extends JPanel {
                 f.setVisible(true);
             }
         });
+    }
+
+
+    public Program getAllData() {
+        return allData;
+    }
+
+    @Override
+    public void setInputToFile(boolean inputToFile, boolean appendToFile) {
+        if (inputToFile) {
+            inputFile = new AppDataSource.WriteToFile(USERACTION_FOLDER, INPUT_LOG, appendToFile);
+            this.inputToFile = inputToFile;
+        }
+    }
+
+    @Override
+    public String getInputString(String message) {
+        System.out.println(message);
+        if (inputToFile) {
+            inputFile.write(message);
+        }
+        return message;
+    }
+
+    @Override
+    public int getInputInt() {
+        return 0;
     }
 }

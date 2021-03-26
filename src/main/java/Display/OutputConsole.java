@@ -2,6 +2,8 @@ package Display;
 
 import static AppDataSource.DataSourceConstants.*;
 import AppDataSource.WriteToFile;
+import Entities.InstructionType;
+import Entities.Program;
 
 public class OutputConsole implements Display.OutputInterface {
 
@@ -22,5 +24,22 @@ public class OutputConsole implements Display.OutputInterface {
             outputFile.write(message);
         }
     }
+
+    @Override
+    public void DisplayOutput(Program program, boolean outputToFile, boolean appendToFile) {
+
+        setOutputToFile(outputToFile,appendToFile);
+
+
+        output("Frequency: " + program.getClockFrequency() + ",");
+        //todo dont log floats in exp notation
+        output("Instruction Count: " + program.getTotalInstructionCount() + ",");
+        for (InstructionType inst :
+                program.getInstructions()) {
+            output(inst.toString()+ ",");
+        }
+        output("\n");
+    }
+
 
 }

@@ -4,6 +4,7 @@ package Entities;
 
 import Engine.Logic;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Program {
@@ -51,7 +52,6 @@ public class Program {
         output += String.valueOf(getClockFrequency());
         output += "\nInstruction Count: ";
         output += String.valueOf(getTotalInstructionCount());
-        //todo add arraylist
         output += "\n---- INSTRUCTIONS ----";
         for (InstructionType inst: getInstructions()) {
             output += "\n" + inst.toString();

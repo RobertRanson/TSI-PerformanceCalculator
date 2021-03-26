@@ -4,7 +4,6 @@ package Engine;
 import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
-
 import java.util.ArrayList;
 
 public class Logic {
@@ -51,7 +50,6 @@ public class Logic {
         float clockTime = frequencyToPeriod(program.getClockFrequency(), Frequency.hertz);
         for (InstructionType instruction: allInstructions) {
             instruction.calculateExecutionTime(clockTime);
-//            System.out.println(instruction.getExecutionTime());
             runtime += instruction.getExecutionTime();
         }
         return runtime;
