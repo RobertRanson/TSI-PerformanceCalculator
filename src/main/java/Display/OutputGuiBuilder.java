@@ -10,10 +10,7 @@ import java.awt.*;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 
-import static AppDataSource.DataSourceConstants.OUTPUT_LOG;
-import static AppDataSource.DataSourceConstants.USERACTION_FOLDER;
-
-public class OutputGUI extends JPanel implements OutputInterface {
+public class OutputGuiBuilder extends JPanel {
     private static final int N_ROWS = 1;
     private static String[] header = {"Type", "Instruction Count", "CPI", "Execution Time"};
     private DefaultTableModel dtm = new DefaultTableModel(null, header) {
@@ -29,32 +26,11 @@ public class OutputGUI extends JPanel implements OutputInterface {
     private JScrollBar vScroll = scrollPane.getVerticalScrollBar();
     private int row;
     private boolean isAutoScroll;
-    private  boolean outputToFile = false;
-    private  AppDataSource.WriteToFile outputFile;
+    private boolean outputToFile = false;
+    private AppDataSource.WriteToFile outputFile;
 
 
-    public void DisplayOutput(Program program, boolean outputToFile, boolean appendToFile){
-        EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                JFrame f = new JFrame();
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                OutputGUI nlt = new OutputGUI(program, outputToFile, appendToFile);
-                f.add(nlt);
-                f.pack();
-                f.setLocationRelativeTo(null);
-                f.setVisible(true);
-            }
-        });
-    }
-
-    public OutputGUI(){}
-
-    public OutputGUI(Program program, boolean outputToFile, boolean appendToFile) {
-
-        setOutputToFile(outputToFile,appendToFile);
-
+    public OutputGuiBuilder(Program program, OutputGui outputGUI) {
         this.setLayout(new BorderLayout());
         Dimension d = new Dimension(800, N_ROWS * table.getRowHeight() + 100);
         table.setPreferredScrollableViewportSize(d);
@@ -80,7 +56,7 @@ public class OutputGUI extends JPanel implements OutputInterface {
 
 
         JPanel cpuInformation = new JPanel();
-        cpuInformation.setLayout(new BoxLayout(cpuInformation,BoxLayout.PAGE_AXIS));
+        cpuInformation.setLayout(new BoxLayout(cpuInformation, BoxLayout.PAGE_AXIS));
 
         JLabel l1 = new JLabel("Clock Frequency: " + program.getClockFrequency() + " (Hz)");
         cpuInformation.add(l1);
@@ -91,7 +67,7 @@ public class OutputGUI extends JPanel implements OutputInterface {
         this.add(cpuInformation, BorderLayout.NORTH);
 
         JPanel results = new JPanel();
-        results.setLayout(new BoxLayout(results,BoxLayout.PAGE_AXIS));
+        results.setLayout(new BoxLayout(results, BoxLayout.PAGE_AXIS));
 
         results.add(new JLabel("Average CPI: " + Logic.calculateAverageCPI(program)));
         results.add(new JLabel("MIPS: " + Logic.calculateMipsRate(program)));
@@ -102,24 +78,10 @@ public class OutputGUI extends JPanel implements OutputInterface {
         this.add(results, BorderLayout.SOUTH);
 
         //Write to file
-        output(Logic.calculateAverageCPI(program)+",");
-        output(Logic.calculateMipsRate(program)+",");
-        output(Logic.calculateExecutionTime(program)+",");
-        output("\n");
-    }
-
-    @Override
-    public void setOutputToFile(boolean outputToFile, boolean appendToFile) {
-        if (outputToFile) {
-            outputFile = new AppDataSource.WriteToFile(USERACTION_FOLDER, OUTPUT_LOG, appendToFile);
-            this.outputToFile = outputToFile;
-        }
-    }
-
-    @Override
-    public void output(String message) {
-        if (outputToFile) {
-            outputFile.write(message);
-        }
+        outputGUI.logEvent(Logic.calculateAverageCPI(program) + ",");
+        outputGUI.logEvent(Logic.calculateMipsRate(program) + ",");
+        outputGUI.logEvent(Logic.calculateExecutionTime(program) + "");
+        outputGUI.logEvent("\n");
     }
 }
+

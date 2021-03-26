@@ -1,44 +1,37 @@
 package Display;
 
-import static AppDataSource.DataSourceConstants.*;
-import AppDataSource.WriteToFile;
+import Engine.Logic;
 import Entities.InstructionType;
 import Entities.Program;
 
-public class OutputConsole implements Display.OutputInterface {
-
-    private boolean outputToFile = false;
-
-    private AppDataSource.WriteToFile outputFile;
-
-    public void setOutputToFile(boolean outputToFile, boolean appendToFile) {
-        if (outputToFile) {
-            outputFile = new AppDataSource.WriteToFile(USERACTION_FOLDER, OUTPUT_LOG, appendToFile);
-            this.outputToFile = outputToFile;
-        }
-    }
-
-    public void output(String message){
-        System.out.println(message);
-        if (outputToFile) {
-            outputFile.write(message);
-        }
-    }
-
-    @Override
-    public void DisplayOutput(Program program, boolean outputToFile, boolean appendToFile) {
-
-        setOutputToFile(outputToFile,appendToFile);
+public class OutputConsole extends OutputController {
 
 
-        output("Frequency: " + program.getClockFrequency() + ",");
+    public void DisplayOutput(Program program) {
+
+        logEvent(program.getClockFrequency()+",");
+        System.out.println("Frequency: "+ program.getClockFrequency());
+
         //todo dont log floats in exp notation
-        output("Instruction Count: " + program.getTotalInstructionCount() + ",");
-        for (InstructionType inst :
-                program.getInstructions()) {
-            output(inst.toString()+ ",");
+
+        logEvent(program.getTotalInstructionCount()+",");
+        System.out.println("Instruction Count: " + program.getTotalInstructionCount());
+
+        for (InstructionType inst : program.getInstructions()) {
+            System.out.println(inst.toString());
+            logEvent(inst.getType() + ",");
+            logEvent(inst.getInstructionCount() + ",");
+            logEvent(inst.getCyclesPerInstruction() + ",");
+            logEvent(inst.getExecutionTime()+"");
         }
-        output("\n");
+        logEvent(Logic.calculateAverageCPI(program)+"");
+        System.out.println("\nCPI: " + Logic.calculateAverageCPI(program));
+        logEvent(Logic.calculateMipsRate(program)+"");
+        System.out.println("\nMIPS Rate: " + Logic.calculateMipsRate(program));
+        logEvent(Logic.calculateExecutionTime(program)+"");
+        System.out.println("\nExecution Time: " + Logic.calculateExecutionTime(program));
+
+        logEvent("\n");
     }
 
 

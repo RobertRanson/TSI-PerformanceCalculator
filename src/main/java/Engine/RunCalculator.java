@@ -8,44 +8,36 @@ import java.awt.*;
 
 public class RunCalculator {
     public GuiOrConsole displayMethod = GuiOrConsole.CONSOLE;
-    public static InputInterface input;
-    public static OutputInterface output;
-
-
+    Program program;
 
     public RunCalculator(GuiOrConsole displayMethod) {
         this.displayMethod = displayMethod;
 
         switch (displayMethod) {
             case CONSOLE:
-                input = new InputConsole();
-                output = new OutputConsole();
+                InputConsole input = new InputConsole();
+                OutputConsole output = new OutputConsole();
 
-                Program program = input.getAllData();
+                input.loggingSettings(true,false);
+                output.loggingSettings(true,false);
 
+                program =  input.DisplayOutput();
+                output.DisplayOutput(program);
 
-                output.DisplayOutput(program, true, true);
                 break;
             case GUI:
 
-                output = new OutputGUI();
+                InputGUI inputGui = new InputGUI();
+                OutputGui outputGUI = new OutputGui();
 
-                EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JFrame f = new JFrame();
-                        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                        InputGUI nlt = new InputGUI();
-                        nlt.setInputToFile(true, true);
-                        f.add(nlt);
-                        f.pack();
-                        f.setLocationRelativeTo(null);
-                        f.setVisible(true);
-
-                    }
-                });
+                try {
+                    program = inputGui.DisplayOutput();
+                    System.out.println("---try");
+                }finally {
+                    outputGUI.DisplayOutput(program);
+                    System.out.println("---finally");
+                }
                 break;
-
         }
     }
 }

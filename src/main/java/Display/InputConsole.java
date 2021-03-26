@@ -11,34 +11,23 @@ import java.util.Scanner;
 import static AppDataSource.DataSourceConstants.INPUT_LOG;
 import static AppDataSource.DataSourceConstants.USERACTION_FOLDER;
 
-public class InputConsole implements Display.InputInterface {
-    private Scanner userInput = new Scanner(System.in);
-    private boolean inputToFile = false;
+public class InputConsole extends InputController {
+    private final Scanner userInput = new Scanner(System.in);
 
-    private AppDataSource.WriteToFile inputFile;
-
-    public void setInputToFile(boolean inputToFile, boolean appendToFile){
-        if (inputToFile){
-            inputFile = new AppDataSource.WriteToFile(USERACTION_FOLDER, INPUT_LOG, appendToFile);
-        }
-        this.inputToFile = inputToFile;
-    }
-
-
-
-
-    public Program getAllData() {
+    @Override
+    public Program DisplayOutput() {
 
         float userInputClockFreq =  (Float.parseFloat(getInputString("Enter the Clock Frequency: ")));
         System.out.println("[hertz, kilohertz, decahertz, megahertz, gigahertz]");
         Frequency userInputFreqUnits = Frequency.valueOf(getInputString("Enter the Units: "));
 
-        ArrayList<InstructionType> userInputInstructions = new ArrayList<>();
-
-        System.out.println("Enter the number of distict instruction types: ");
+        System.out.println("Enter the number of district instruction types: ");
         int userInputNumberOfInst = getInputInt();
 
+        ArrayList<InstructionType> userInputInstructions = new ArrayList<>();
+
         for (int i = 0; i < userInputNumberOfInst; i++) {
+
             System.out.println("------------------------------------");
             System.out.println("Instruction: " + (i+1) + "/" + userInputNumberOfInst);
             String userInputType = getInputString("Enter the name of the Instruction: ");
@@ -47,30 +36,26 @@ public class InputConsole implements Display.InputInterface {
             System.out.println("Enter the cycles per instruction: ");
             int userInputCPI = getInputInt();
 
-            InstructionType userInputInst = new InstructionType(userInputType,userInputInstCount,userInputCPI);
-            userInputInstructions.add(userInputInst);
+            userInputInstructions.add(new InstructionType(userInputType,userInputInstCount,userInputCPI));
         }
-        getInputString("\n");
 
-        Program userInputProgram = new Program(userInputClockFreq,userInputFreqUnits,userInputInstructions);
-        return userInputProgram;
+        getInputString("\n");
+        return (new Program(userInputClockFreq,userInputFreqUnits,userInputInstructions));
+
     }
 
     public String getInputString(String message){
         System.out.println(message);
         String result = userInput.nextLine();
-        if (inputToFile) {
-            inputFile.write(result);
-        }
+        logEvent(result);
         return result;
     }
 
     public int getInputInt() {
         int result = Integer.parseInt(userInput.nextLine());
-        if (inputToFile) {
-            inputFile.write(String.valueOf(result));
-        }
+        logEvent(String.valueOf(result));
         return result;
     }
+
 
 }
