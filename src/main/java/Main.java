@@ -1,12 +1,5 @@
-import Display.InputGUI;
-import Display.*;
 import Engine.GuiOrConsole;
 import Engine.RunCalculator;
-import Entities.Program;
-import EntitiesDataSourceMapping.DataBaseSetup;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Main {
 
