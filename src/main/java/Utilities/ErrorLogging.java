@@ -1,7 +1,7 @@
 package Utilities;
 
-import AppDataSource.WriteToFile;
-import static AppDataSource.DataSourceConstants.*;
+import Source.WriteToFile;
+import static Source.DataSourceConstants.*;
 
 public class ErrorLogging {
 

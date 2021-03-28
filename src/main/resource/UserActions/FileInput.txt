@@ -1,0 +1,12 @@
+40
+megahertz
+3
+Control
+100000
+2
+Float
+10000
+4
+Branch
+30000
+8

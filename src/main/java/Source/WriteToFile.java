@@ -1,10 +1,10 @@
-package AppDataSource;
-import static AppDataSource.DataSourceConstants.*;
+package Source;
+import static Source.DataSourceConstants.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class WriteToFile {
+public class WriteToFile implements WriteToFileInterface {
 
     public WriteToFile(String directory, String fileName, boolean appendToFile){
         this.setFileWriter(directory,fileName,appendToFile);
@@ -15,7 +15,9 @@ public class WriteToFile {
 
 
 
+    @Override
     public void setFileWriter(String directory, String fileName, boolean appendToFile){
+        System.out.println(filePathPrefix + directory+ fileName);
         try {
             fileWriter = new FileWriter(filePathPrefix + directory+ fileName, appendToFile);
         } catch (IOException ioExp) {
@@ -24,6 +26,7 @@ public class WriteToFile {
         }
     }
 
+    @Override
     public void write(String message){
         try {
             fileWriter.write(message);
@@ -34,6 +37,7 @@ public class WriteToFile {
         }
     }
 
+    @Override
     public void closeFileWriter(){
         try {
             fileWriter.close();

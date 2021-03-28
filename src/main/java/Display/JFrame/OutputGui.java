@@ -1,5 +1,6 @@
-package Display;
+package Display.JFrame;
 
+import Engine.OutputController;
 import Entities.Program;
 
 import javax.swing.*;

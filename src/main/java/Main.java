@@ -1,11 +1,11 @@
-import Engine.GuiOrConsole;
+import Engine.EnumSource;
 import Engine.RunCalculator;
 
 public class Main {
 
-    public static void main(String[ ] args) {
+    public static void main(String[ ] args) throws InterruptedException {
 
-        RunCalculator execution = new RunCalculator(GuiOrConsole.CONSOLE);
+        RunCalculator execution = new RunCalculator(EnumSource.CONSOLE);
 
         // ---- hardcoded
 //        InstructionType inst1 = new InstructionType("IntArith",45000,1);

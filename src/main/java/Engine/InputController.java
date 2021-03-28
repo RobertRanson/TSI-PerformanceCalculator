@@ -1,16 +1,17 @@
-package Display;
+package Engine;
 
-import AppDataSource.WriteToFile;
+import Source.WriteToFile;
 import Entities.Program;
 
 public abstract class InputController {
 
     public boolean loggingOn;
-    private AppDataSource.WriteToFile outputFile;
+    private Source.WriteToFile outputFile;
 
-    public void loggingSettings(boolean loggingOn, boolean loggingOverwrite) {
+    public void loggingSettings(boolean loggingOn, boolean loggingAppend) {
         if (loggingOn) {
-            outputFile = new WriteToFile("UserActions/", "userOutputLog.csv", loggingOverwrite);
+
+            outputFile = new WriteToFile("SystemLogs/", "systemInputLog.csv", loggingAppend);
             this.loggingOn = loggingOn;
         }
     }

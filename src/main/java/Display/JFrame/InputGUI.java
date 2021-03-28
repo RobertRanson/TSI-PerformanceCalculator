@@ -1,25 +1,20 @@
-package Display;
+package Display.JFrame;
 
-import Entities.Frequency;
-import Entities.InstructionType;
-import Engine.Logic;
+import Engine.InputController;
+import Engine.RunCalculator;
 import Entities.Program;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.util.ArrayList;
 
-
-import static AppDataSource.DataSourceConstants.*;
-
-public class InputGUI extends InputController{
+public class InputGUI extends InputController {
 
     private static Program program = null;
     private static InputGuiBuilder builder;
+    private static RunCalculator syncLock;
+
+    public static RunCalculator getSyncLock() { return syncLock; }
+    public static void setSyncLock(RunCalculator syncLock) { InputGUI.syncLock = syncLock; }
 
     public static Program getProgram() { return program; }
     public static void setProgram(Program program) { InputGUI.program = program; }
@@ -30,7 +25,8 @@ public class InputGUI extends InputController{
     @Override
     public Program DisplayOutput() {
 
-        setBuilder(new InputGuiBuilder(getProgram(),this));
+        setSyncLock(syncLock);
+        setBuilder(new InputGuiBuilder(this));
         EventQueue.invokeLater(new Runnable() {
 
             @Override

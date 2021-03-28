@@ -1,5 +1,5 @@
 package Entities;
 
 public enum Frequency {
-    hertz, decahertz, kilohertz, megahertz, gighertz
+    hertz, decahertz, kilohertz, megahertz, gigahertz
 }
