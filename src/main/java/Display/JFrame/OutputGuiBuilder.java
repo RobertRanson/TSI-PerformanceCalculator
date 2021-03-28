@@ -1,4 +1,4 @@
-package Display;
+package Display.JFrame;
 
 import Engine.Logic;
 import Entities.InstructionType;
@@ -27,7 +27,7 @@ public class OutputGuiBuilder extends JPanel {
     private int row;
     private boolean isAutoScroll;
     private boolean outputToFile = false;
-    private AppDataSource.WriteToFile outputFile;
+    private Source.WriteToFile outputFile;
 
 
     public OutputGuiBuilder(Program program, OutputGui outputGUI) {

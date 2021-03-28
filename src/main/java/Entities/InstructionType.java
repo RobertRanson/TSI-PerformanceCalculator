@@ -1,5 +1,7 @@
 package Entities;
 
+import java.util.ArrayList;
+
 public class InstructionType {
     private String type;
     private int instructionCount;
@@ -30,8 +32,14 @@ public class InstructionType {
 
 
 
-    public String toString(){
-        String output = "Type: " + getType() + ", Instruction Count: " + getInstructionCount() + " CPI: " + getCyclesPerInstruction() + ", Execution time: " + getExecutionTime();
+    public ArrayList<String> getinstructioninfo(){
+        ArrayList<String> output = new ArrayList<>();
+
+        output.add("Type: " + getType() );
+        output.add("Instruction Count: " + getInstructionCount());
+        output.add("CPI: " + getCyclesPerInstruction());
+        output.add("Execution time: " + getExecutionTime());
+
         return output;
     }
 }

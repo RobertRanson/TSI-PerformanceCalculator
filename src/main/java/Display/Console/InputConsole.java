@@ -1,17 +1,16 @@
-package Display;
+package Display.Console;
 
+import Engine.InputController;
 import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static AppDataSource.DataSourceConstants.INPUT_LOG;
-import static AppDataSource.DataSourceConstants.USERACTION_FOLDER;
-
 public class InputConsole extends InputController {
+
+    private String delimiter = ",";
     private final Scanner userInput = new Scanner(System.in);
 
     @Override
@@ -39,7 +38,7 @@ public class InputConsole extends InputController {
             userInputInstructions.add(new InstructionType(userInputType,userInputInstCount,userInputCPI));
         }
 
-        getInputString("\n");
+        logEvent("\n");
         return (new Program(userInputClockFreq,userInputFreqUnits,userInputInstructions));
 
     }
@@ -47,7 +46,7 @@ public class InputConsole extends InputController {
     public String getInputString(String message){
         System.out.println(message);
         String result = userInput.nextLine();
-        logEvent(result);
+        logEvent(result+delimiter);
         return result;
     }
 

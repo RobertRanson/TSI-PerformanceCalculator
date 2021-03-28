@@ -1,4 +1,4 @@
-package Display;
+package Display.JFrame;
 
 import Entities.Frequency;
 import Entities.InstructionType;
@@ -30,7 +30,7 @@ public class InputGuiBuilder extends JPanel {
     private boolean isAutoScroll;
     private Program allData;
 
-    public InputGuiBuilder(Program program, InputGUI inputGUI) {
+    public InputGuiBuilder(InputGUI inputGUI) {
 
         this.setLayout(new BorderLayout());
         Dimension d = new Dimension(800, N_ROWS * table.getRowHeight() + 100);
@@ -59,13 +59,13 @@ public class InputGuiBuilder extends JPanel {
         JRadioButton r2 = new JRadioButton("decahertz");
         JRadioButton r3 = new JRadioButton("kilohertz");
         JRadioButton r4 = new JRadioButton("megahertz");
-        JRadioButton r5 = new JRadioButton("gighertz");
+        JRadioButton r5 = new JRadioButton("gigahertz");
 
         r1.setActionCommand("hertz");
         r2.setActionCommand("decahertz");
         r3.setActionCommand("kilohertz");
         r4.setActionCommand("megahertz");
-        r5.setActionCommand("gighertz");
+        r5.setActionCommand("gigahertz");
 
         buttonGroup.add(r1);
         buttonGroup.add(r2);
@@ -123,7 +123,19 @@ public class InputGuiBuilder extends JPanel {
                         instructionTypes));
 
 
-                System.out.println(program.toString());
+                System.out.println(InputGUI.getProgram());
+
+                OutputGui outputGui = new OutputGui();
+                outputGui.loggingSettings(true,true);
+                outputGui.DisplayOutput(InputGUI.getProgram());
+
+//                System.out.println("Notify");
+//
+//                try {
+//                    InputGUI.getSyncLock().notify();
+//                }catch (IllegalMonitorStateException exception){
+//                    System.out.println(exception);
+//                }
 
             }
         }));

@@ -1,4 +1,4 @@
-package AppDataSource;
+package Source;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +19,7 @@ public class ReadDelimitedFile {
         List<String[]> fileData = new ArrayList<String[]>();
         try {
             File propertyFile = new File(filePathPrefix+ directory + fileName);
+            System.out.println(propertyFile.getPath());
             Scanner propertyReader = new Scanner(propertyFile);
             while (propertyReader.hasNextLine()) {
                 String fileRow = propertyReader.nextLine();
