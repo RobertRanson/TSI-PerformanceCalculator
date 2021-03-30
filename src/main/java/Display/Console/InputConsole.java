@@ -1,10 +1,8 @@
 package Display.Console;
 
 import Engine.InputController;
-import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
-import Source.LoggingService;
 import Source.LoggingServiceInterface;
 
 import java.util.ArrayList;

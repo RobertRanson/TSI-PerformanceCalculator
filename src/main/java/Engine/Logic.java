@@ -4,10 +4,14 @@ package Engine;
 import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
+import org.sqlite.date.DateFormatUtils;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Logic {
+
+    private static DecimalFormat df = new DecimalFormat("##.######");
 
     public static float frequencyToHertz(Frequency currentUnits, float currentValue) {
         float returnValue = currentValue;
@@ -28,11 +32,11 @@ public class Logic {
             default:
                 break;
         }
-        return returnValue;
+        return trimFloat(returnValue);
     }
 
     public static float frequencyToPeriod(float currentFrequency, Frequency currentUnits) {
-        return (1 / frequencyToHertz(currentUnits, currentFrequency));
+        return trimFloat(1 / frequencyToHertz(currentUnits, currentFrequency));
     }
 
     public static float calculateAverageCPI(Program program) {
@@ -41,7 +45,7 @@ public class Logic {
         for (InstructionType instruction : allInstructions) {
             sum += instruction.getCyclesPerInstruction() * instruction.getInstructionCount();
         }
-        return (sum / program.getTotalInstructionCount());
+        return trimFloat(sum / program.getTotalInstructionCount());
     }
 
     public static float calculateExecutionTime(Program program) {
@@ -52,10 +56,20 @@ public class Logic {
             instruction.calculateExecutionTime(clockTime);
             runtime += instruction.getExecutionTime();
         }
-        return runtime;
+        return trimFloat(runtime);
     }
 
     public static float calculateMipsRate(Program program) {
-        return (program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000));
+        return trimFloat((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
+    }
+
+    public static float trimFloat(float input){
+        return Float.valueOf(df.format(input));
+    }
+    public static String floatToString(float fl){
+        return df.format(fl);
+    }
+    public static float stringToFloat(String st){
+        return trimFloat(Float.valueOf(st));
     }
 }

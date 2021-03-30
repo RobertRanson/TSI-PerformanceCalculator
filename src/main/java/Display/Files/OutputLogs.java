@@ -1,10 +1,8 @@
 package Display.Files;
 
-import Engine.Logic;
 import Engine.OutputController;
 import Entities.InstructionType;
 import Entities.Program;
-import Source.LoggingService;
 import Source.LoggingServiceInterface;
 
 import static Source.DataSourceConstants.SYSTEM_LOGS;

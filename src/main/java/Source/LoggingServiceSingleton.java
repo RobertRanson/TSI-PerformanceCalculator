@@ -9,23 +9,23 @@ import java.util.Scanner;
 
 import static Source.DataSourceConstants.RESOURCE;
 
-public class LoggingService implements LoggingServiceInterface {
+public class LoggingServiceSingleton implements LoggingServiceInterface {
 
     private FileWriter fileWriter;
     private String filePathPrefix = RESOURCE;
     private String logDelimitor = ",";
 
-    private static LoggingService uniqueInstance;
+    private static LoggingServiceSingleton uniqueInstance;
 
-    public static LoggingService getInstance() {
+    public static LoggingServiceSingleton getInstance() {
         if (uniqueInstance==null) {
-            uniqueInstance = new LoggingService();
+            uniqueInstance = new LoggingServiceSingleton();
         }
         return uniqueInstance;
     }
 
 
-    private LoggingService(){ }
+    private LoggingServiceSingleton(){ }
 
     public void setLogDelimitor(String logDelimitor){
         this.logDelimitor = logDelimitor;
