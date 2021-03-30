@@ -1,6 +1,6 @@
-#Computer performance calculator
+# Computer performance calculator
 ### COMPSCI1022 Testing and Software Improvement
-####Inputs
+#### Inputs
 * Clock Speed
 * Clock speed unit
 * Instructions
@@ -8,7 +8,7 @@
   * Instruction count
   * Cycles per instruction
     
-####Outputs
+#### Outputs
 * Clock Speed Hz
 * Total instruction count
 * Instructions
@@ -20,7 +20,7 @@
 * MIPS (Million instructions per second) rate
 * Program execution time
 
-##Source input/output
+## Source input/output
 * Console
 * JFrame GUI
 * txt file
