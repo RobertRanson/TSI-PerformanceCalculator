@@ -3,28 +3,41 @@ package Display.Files;
 import Engine.InputController;
 import Entities.Frequency;
 import Entities.InstructionType;
+import Source.DataSourceConstants;
 import Entities.Program;
+import Source.LoggingServiceInterface;
 
 import java.util.ArrayList;
 
-public class InputStub implements InputController {
+import static Source.DataSourceConstants.SYSTEM_INPUT;
+import static Source.DataSourceConstants.SYSTEM_LOGS;
+
+public class InputStub implements InputController, LoggingServiceInterface {
     @Override
     public Program run() {
-        InstructionType inst1 = new InstructionType(
-                "Arith",
-                10000,
-                1);
-        InstructionType inst2 = new InstructionType(
-                "Float",
-                6000,
-                2);
-        ArrayList<InstructionType> instList =  new ArrayList<InstructionType>(){};
-        instList.add(inst1);
-        instList.add(inst2);
 
-        return (new Program(
-                40.0F,
-                Frequency.kilohertz,
-                instList));
+        this.setLogFile(SYSTEM_LOGS,SYSTEM_INPUT,false);
+
+        this.setClockFrequency(
+                "40",
+                "kilohertz",
+                this
+                );
+
+        this.addInstruction(
+                "Control",
+                "10000",
+                "1",
+                this
+        );
+
+        this.addInstruction(
+                "Float",
+                "6000",
+                "2",
+                this
+        );
+
+        return (this.program);
     }
 }

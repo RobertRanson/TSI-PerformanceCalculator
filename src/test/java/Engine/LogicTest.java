@@ -8,8 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LogicTest {
 
-    InputStub input = new InputStub();
-
+    InputController input = new InputStub();
 
     @Test
     void calculateAverageCPI() {
