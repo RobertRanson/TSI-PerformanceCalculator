@@ -1,17 +1,6 @@
-Frequency: 4.0E7
-Instruction Count: 140000
-Type: Control
-Instruction Count: 100000
-CPI: 2
-Execution time: 0.0
-Type: Float
-Instruction Count: 10000
-CPI: 4
-Execution time: 0.0
-Type: Branch
-Instruction Count: 30000
-CPI: 8
-Execution time: 0.0
-CPI: 3.4285715
-MIPS Rate: 11.666667
-Execution Time: 0.012
+Clock Frequency: 4.0E7
+Total Instruction Count: 140000.0
+Type: Control Count: 100000 Cpi: 2.0 Exec Time: 0.0
+Type: Float Count: 10000 Cpi: 4.0 Exec Time: 0.0
+Type: Branch Count: 30000 Cpi: 8.0 Exec Time: 0.0
+CPI: 3.4285715MIPS Rate: 11.666667Execution Time: 0.012
