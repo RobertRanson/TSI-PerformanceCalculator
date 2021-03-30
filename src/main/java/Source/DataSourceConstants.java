@@ -9,5 +9,9 @@ public class DataSourceConstants{
     public static final String ERROR_LOG = "ErrorLog.csv";
     public static final String RESOURCE = "src/main/resource/";
     public static final String FILE_TYPE = ".csv";
+    public static final String SYSTEM_LOGS = "systemLogs/";
+    public static final String SYSTEM_OUTPUT = "systemOutputLog.csv";
+    public static final String SYSTEM_INPUT = "systemInputLog.csv";
+
 }
 

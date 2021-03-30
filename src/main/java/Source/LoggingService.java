@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 import static Source.DataSourceConstants.RESOURCE;
 
-public class LoggingService {
+public class LoggingService implements LoggingServiceInterface {
 
     private FileWriter fileWriter;
     private String filePathPrefix = RESOURCE;
@@ -67,7 +67,7 @@ public class LoggingService {
     public void log(String message){
 
         try {
-            fileWriter.write(message+"\n");
+            fileWriter.write(message);
             fileWriter.flush();
 
         } catch (IOException ioExp) {

@@ -1,46 +1,36 @@
 package Display.Console;
 
-import Engine.Logic;
 import Engine.OutputController;
 import Entities.InstructionType;
 import Entities.Program;
+import Source.LoggingServiceInterface;
+import static Source.DataSourceConstants.*;
 
-import java.util.ArrayList;
+public class OutputConsole implements LoggingServiceInterface, OutputController {
 
-public class OutputConsole extends OutputController {
+    public void run(Program program) {
 
-    private String delimiter = ",";
+        this.setLogFile(SYSTEM_LOGS,SYSTEM_OUTPUT,false);
 
-    public void DisplayOutput(Program program) {
-
-        logEvent(program.getClockFrequency()+delimiter);
-        System.out.println("Frequency: "+ program.getClockFrequency());
-
+        //CPU Information
+        System.out.println("Frequency: "+ this.getClockFrequency(program,this));
         //todo dont log floats in exp notation
+        System.out.println("Program Instruction Count: " + this.getTotalInstructionCount(program,this));
 
-        logEvent(program.getTotalInstructionCount()+delimiter);
-        System.out.println("Program Instruction Count: " + program.getTotalInstructionCount());
-
-
+        //Instruction Information
         System.out.println("------------------------------------");
 
         for (InstructionType inst : program.getInstructions()) {
-
-            for (String info: inst.getinstructioninfo()) { System.out.println(info); }
-            logEvent(inst.getType() + delimiter);
-            logEvent(inst.getInstructionCount() + delimiter);
-            logEvent(inst.getCyclesPerInstruction() + delimiter);
-            logEvent(inst.getExecutionTime()+"");
+            System.out.println("Type: " + this.getInstructionType(inst,this));
+            System.out.println("Count: " + this.getInstructionCount(inst,this));
+            System.out.println("CPI: " + this.getInstructionCpi(inst,this));
+            System.out.println("Exec Time: " + this.getInstructionExec(inst,this));
         }
-        logEvent(Logic.calculateAverageCPI(program)+"");
-        System.out.println("CPI: " + Logic.calculateAverageCPI(program));
-        logEvent(Logic.calculateMipsRate(program)+"");
-        System.out.println("MIPS Rate: " + Logic.calculateMipsRate(program));
-        logEvent(Logic.calculateExecutionTime(program)+"");
-        System.out.println("Execution Time: " + Logic.calculateExecutionTime(program));
 
-        logEvent("\n");
+        //Results
+
+        System.out.println("CPI: " + this.getAverageCpi(program,this));
+        System.out.println("MIPS Rate: " + this.getMipsRate(program,this));
+        System.out.println("Execution Time: " + this.getExecTime(program,this));
     }
-
-
 }

@@ -3,29 +3,26 @@ package Display.JFrame;
 import Engine.InputController;
 import Engine.RunCalculator;
 import Entities.Program;
+import Source.LoggingServiceInterface;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class InputGUI extends InputController {
+import static Source.DataSourceConstants.*;
 
-    private static Program program = null;
+public class InputGUI implements InputController, LoggingServiceInterface {
+
     private static InputGuiBuilder builder;
-    private static RunCalculator syncLock;
-
-    public static RunCalculator getSyncLock() { return syncLock; }
-    public static void setSyncLock(RunCalculator syncLock) { InputGUI.syncLock = syncLock; }
-
-    public static Program getProgram() { return program; }
-    public static void setProgram(Program program) { InputGUI.program = program; }
 
     public static InputGuiBuilder getBuilder() { return builder; }
     private static void setBuilder(InputGuiBuilder buildWithProgram) { InputGUI.builder = buildWithProgram; }
+    public static Program getProgram() { return program; }
 
     @Override
-    public Program DisplayOutput() {
+    public Program run() {
 
-        setSyncLock(syncLock);
+        this.setLogFile(SYSTEM_LOGS,SYSTEM_INPUT,false);
+
         setBuilder(new InputGuiBuilder(this));
         EventQueue.invokeLater(new Runnable() {
 

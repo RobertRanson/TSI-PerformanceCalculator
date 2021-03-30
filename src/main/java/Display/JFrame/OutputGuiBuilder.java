@@ -26,21 +26,34 @@ public class OutputGuiBuilder extends JPanel {
     private JScrollBar vScroll = scrollPane.getVerticalScrollBar();
     private int row;
     private boolean isAutoScroll;
-    private boolean outputToFile = false;
-    private Source.WriteToFile outputFile;
-
 
     public OutputGuiBuilder(Program program, OutputGui outputGUI) {
         this.setLayout(new BorderLayout());
+
+
+        //CPU Information
+
+        JPanel cpuInformation = new JPanel();
+        cpuInformation.setLayout(new BoxLayout(cpuInformation, BoxLayout.PAGE_AXIS));
+
+        cpuInformation.add(new JLabel("Clock Frequency: " + outputGUI.getClockFrequency(program,outputGUI) + " (Hz)"));
+        cpuInformation.add(new JLabel("Instruction Count: " + outputGUI.getTotalInstructionCount(program,outputGUI)));
+
+        cpuInformation.setAlignmentX(Component.CENTER_ALIGNMENT);
+        cpuInformation.setBorder(BorderFactory.createTitledBorder("CPU STATS"));
+        this.add(cpuInformation, BorderLayout.NORTH);
+
+        //Instruction Information
+
         Dimension d = new Dimension(800, N_ROWS * table.getRowHeight() + 100);
         table.setPreferredScrollableViewportSize(d);
 
         for (InstructionType inst : program.getInstructions()) {
             dtm.addRow(new Object[]{
-                    inst.getType(),
-                    inst.getInstructionCount(),
-                    inst.getCyclesPerInstruction(),
-                    inst.getExecutionTime()
+                    outputGUI.getInstructionType(inst,outputGUI),
+                    outputGUI.getInstructionCount(inst,outputGUI),
+                    outputGUI.getInstructionCpi(inst,outputGUI),
+                    outputGUI.getInstructionExec(inst,outputGUI)
             });
         }
 
@@ -55,33 +68,18 @@ public class OutputGuiBuilder extends JPanel {
         this.add(scrollPane, BorderLayout.CENTER);
 
 
-        JPanel cpuInformation = new JPanel();
-        cpuInformation.setLayout(new BoxLayout(cpuInformation, BoxLayout.PAGE_AXIS));
-
-        JLabel l1 = new JLabel("Clock Frequency: " + program.getClockFrequency() + " (Hz)");
-        cpuInformation.add(l1);
-        cpuInformation.add(new JLabel("Instruction Count: " + program.getTotalInstructionCount()));
-
-        cpuInformation.setAlignmentX(Component.CENTER_ALIGNMENT);
-        cpuInformation.setBorder(BorderFactory.createTitledBorder("CPU STATS"));
-        this.add(cpuInformation, BorderLayout.NORTH);
+        //Results
 
         JPanel results = new JPanel();
         results.setLayout(new BoxLayout(results, BoxLayout.PAGE_AXIS));
 
-        results.add(new JLabel("Average CPI: " + Logic.calculateAverageCPI(program)));
-        results.add(new JLabel("MIPS: " + Logic.calculateMipsRate(program)));
-        results.add(new JLabel("Execution Time: " + Logic.calculateExecutionTime(program) + " (s)"));
+        results.add(new JLabel("Average CPI: " + outputGUI.getAverageCpi(program,outputGUI)));
+        results.add(new JLabel("MIPS: " + outputGUI.getMipsRate(program,outputGUI)));
+        results.add(new JLabel("Execution Time: " + outputGUI.getExecTime(program,outputGUI) + " (s)"));
 
         results.setAlignmentX(Component.CENTER_ALIGNMENT);
         results.setBorder(BorderFactory.createTitledBorder("RESULTS"));
         this.add(results, BorderLayout.SOUTH);
-
-        //Write to file
-        outputGUI.logEvent(Logic.calculateAverageCPI(program) + ",");
-        outputGUI.logEvent(Logic.calculateMipsRate(program) + ",");
-        outputGUI.logEvent(Logic.calculateExecutionTime(program) + "");
-        outputGUI.logEvent("\n");
     }
 }
 

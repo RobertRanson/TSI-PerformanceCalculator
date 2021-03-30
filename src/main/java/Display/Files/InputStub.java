@@ -7,9 +7,9 @@ import Entities.Program;
 
 import java.util.ArrayList;
 
-public class InputStub extends InputController {
+public class InputStub implements InputController {
     @Override
-    public Program DisplayOutput() {
+    public Program run() {
         InstructionType inst1 = new InstructionType(
                 "Arith",
                 10000,
@@ -27,6 +27,4 @@ public class InputStub extends InputController {
                 Frequency.kilohertz,
                 instList));
     }
-
-
 }

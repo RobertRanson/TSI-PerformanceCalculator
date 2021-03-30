@@ -13,7 +13,7 @@ class LogicTest {
 
     @Test
     void calculateAverageCPI() {
-        Program program = input.DisplayOutput();
+        Program program = input.run();
         float cpi = Logic.calculateAverageCPI(program);
         assertEquals(1.375,cpi);
     }
