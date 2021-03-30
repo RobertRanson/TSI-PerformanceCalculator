@@ -36,7 +36,9 @@ public class InputGuiBuilder extends JPanel {
         Dimension d = new Dimension(800, N_ROWS * table.getRowHeight() + 100);
         table.setPreferredScrollableViewportSize(d);
 
-        for (int i = 0; i < N_ROWS; i++) { addRow(); }
+        for (int i = 0; i < N_ROWS; i++) {
+            addRow();
+        }
 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         vScroll.addAdjustmentListener(new AdjustmentListener() {
@@ -81,7 +83,6 @@ public class InputGuiBuilder extends JPanel {
 
         this.add(cpuinformation, BorderLayout.NORTH);
 
-
         JPanel panel = new JPanel();
         panel.add(new JButton(new AbstractAction("Add Row") {
 
@@ -96,52 +97,36 @@ public class InputGuiBuilder extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                inputGUI.logEvent(clockFrequency.getText() + ",");
-                inputGUI.logEvent(buttonGroup.getSelection().getActionCommand() + ",");
+                //CPU Information
+
+                inputGUI.setClockFrequency(
+                        clockFrequency.getText(),
+                        buttonGroup.getSelection().getActionCommand(),
+                        inputGUI
+                );
+                //Instruction Information
 
                 ArrayList<InstructionType> instructionTypes = new ArrayList<>();
 
                 for (int i = 0; i < row + 1; i++) {
                     boolean checkBox = (boolean) table.getModel().getValueAt(i, 3);
                     if (checkBox) {
-
-                        inputGUI.logEvent(String.valueOf(table.getModel().getValueAt(i, 0)) + ",");
-                        inputGUI.logEvent(String.valueOf(table.getModel().getValueAt(i, 1)) + ",");
-                        inputGUI.logEvent(String.valueOf(table.getModel().getValueAt(i, 2)) + ",");
-
-                        instructionTypes.add(new InstructionType(
+                        inputGUI.addInstruction(
                                 String.valueOf(table.getModel().getValueAt(i, 0)),
-                                (Integer) table.getModel().getValueAt(i, 1),
-                                (Integer) table.getModel().getValueAt(i, 2)));
+                                String.valueOf(table.getModel().getValueAt(i, 1)),
+                                String.valueOf(table.getModel().getValueAt(i, 2)),
+                                inputGUI
+                        );
                     }
                 }
-                inputGUI.logEvent("\n");
-
-                InputGUI.setProgram(new Program(
-                        Float.valueOf(clockFrequency.getText()),
-                        Frequency.valueOf(buttonGroup.getSelection().getActionCommand()),
-                        instructionTypes));
-
-
-                System.out.println(InputGUI.getProgram());
-
                 OutputGui outputGui = new OutputGui();
-                outputGui.loggingSettings(true,true);
-                outputGui.DisplayOutput(InputGUI.getProgram());
-
-//                System.out.println("Notify");
-//
-//                try {
-//                    InputGUI.getSyncLock().notify();
-//                }catch (IllegalMonitorStateException exception){
-//                    System.out.println(exception);
-//                }
-
+                outputGui.run(inputGUI.getProgram());
             }
         }));
         this.add(panel, BorderLayout.SOUTH);
 
     }
+
     private void addRow() {
         dtm.addRow(new Object[]{
                 String.valueOf("Type: " + row),

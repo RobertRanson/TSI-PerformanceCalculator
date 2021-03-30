@@ -4,7 +4,7 @@ import static Source.DataSourceConstants.*;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class WriteToFile implements WriteToFileInterface {
+public class WriteToFile {
 
     public WriteToFile(String directory, String fileName, boolean appendToFile){
         this.setFileWriter(directory,fileName,appendToFile);
@@ -15,7 +15,6 @@ public class WriteToFile implements WriteToFileInterface {
 
 
 
-    @Override
     public void setFileWriter(String directory, String fileName, boolean appendToFile){
         System.out.println(filePathPrefix + directory+ fileName);
         try {
@@ -26,7 +25,6 @@ public class WriteToFile implements WriteToFileInterface {
         }
     }
 
-    @Override
     public void write(String message){
         try {
             fileWriter.write(message);
@@ -37,7 +35,7 @@ public class WriteToFile implements WriteToFileInterface {
         }
     }
 
-    @Override
+
     public void closeFileWriter(){
         try {
             fileWriter.close();

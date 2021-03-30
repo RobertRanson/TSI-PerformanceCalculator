@@ -5,45 +5,45 @@ import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
 import Source.LoggingService;
+import Source.LoggingServiceInterface;
 
 import java.util.ArrayList;
 
-public class InputLogs extends InputController {
+import static Source.DataSourceConstants.SYSTEM_INPUT;
+import static Source.DataSourceConstants.SYSTEM_LOGS;
 
-    private LoggingService loggingService;
-    private String deliminator = ",";
-
-    private void setLoggingService(LoggingService ls) { loggingService = ls; }
+public class InputLogs implements InputController, LoggingServiceInterface {
 
     @Override
-    public Program DisplayOutput() {
-        setLoggingService(LoggingService.getInstance());
-        loggingService.setLogFile("UserActions/", "FileInput.txt",true);
+    public Program run() {
 
         ArrayList<String> data = (ArrayList<String>) loggingService.getLogData("UserActions/", "FileInput.txt");
 
-        float clockFrequency = Float.parseFloat(data.get(0));
-        logEvent(clockFrequency+deliminator);
+        this.setLogFile(SYSTEM_LOGS,SYSTEM_INPUT,false);
 
-        Frequency frequencyUnits = Frequency.valueOf(data.get(1));
-        logEvent(frequencyUnits+deliminator);
+        //CPU Information
 
-        int numberOfInstructions = Integer.valueOf(data.get(2));
-        logEvent(numberOfInstructions+deliminator);
+        this.setClockFrequency(
+                data.get(0),
+                data.get(1),
+                this
+        );
+
+
+        //Instruction Information
+
+        //int numberOfInstructions = Integer.valueOf(data.get(2));
 
         ArrayList<InstructionType> fileInputInstructions = new ArrayList<>();
 
         for (int i = 3; i < data.size(); i=i+3) {
-            String instType = data.get(i);
-            int instCount = Integer.valueOf(data.get(i+1));
-            int instCpi = Integer.valueOf(data.get(i+2));
-            logEvent(instType+deliminator);
-            logEvent(instCount+deliminator);
-            logEvent(instCpi+deliminator);
-
-            fileInputInstructions.add(new InstructionType(instType,instCount,instCpi));
+            this.addInstruction(
+                    data.get(i),
+                    data.get(i+1),
+                    data.get(i+2),
+                    this
+            );
         }
-
-        return (new Program(clockFrequency,frequencyUnits,fileInputInstructions));
+        return (this.program);
     }
 }

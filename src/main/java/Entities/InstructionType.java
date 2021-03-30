@@ -3,11 +3,11 @@ package Entities;
 import java.util.ArrayList;
 
 public class InstructionType {
+
     private String type;
     private int instructionCount;
     private int cyclesPerInstruction;
     private float executionTime;
-
 
     public InstructionType(String type, int instructionCount, int cyclesPerInstruction){
         setType(type);
@@ -18,6 +18,7 @@ public class InstructionType {
     public void calculateExecutionTime(float clockFrequency){
         setExecutionTime((clockFrequency * this.cyclesPerInstruction * this.instructionCount));
     }
+
     public float getExecutionTime() { return executionTime; }
     public void setExecutionTime(float executionTime) { this.executionTime = executionTime; }
 
@@ -29,8 +30,6 @@ public class InstructionType {
 
     public int getCyclesPerInstruction() { return cyclesPerInstruction; }
     public void setCyclesPerInstruction(int cyclesPerInstruction) { this.cyclesPerInstruction = cyclesPerInstruction; }
-
-
 
     public ArrayList<String> getinstructioninfo(){
         ArrayList<String> output = new ArrayList<>();

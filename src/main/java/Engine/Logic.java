@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class Logic {
 
-    private static Entities.Frequency Frequency;
-
     public static float frequencyToHertz(Frequency currentUnits, float currentValue) {
         float returnValue = currentValue;
         switch (currentUnits) {

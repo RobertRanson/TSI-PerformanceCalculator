@@ -5,50 +5,56 @@ import Engine.OutputController;
 import Entities.InstructionType;
 import Entities.Program;
 import Source.LoggingService;
+import Source.LoggingServiceInterface;
 
-public class OutputLogs extends OutputController {
+import static Source.DataSourceConstants.SYSTEM_LOGS;
+import static Source.DataSourceConstants.SYSTEM_OUTPUT;
 
-    private LoggingService loggingService;
+public class OutputLogs implements OutputController, LoggingServiceInterface {
+
     private String deliminator = ",";
 
-
-    private void setLoggingService(LoggingService ls) { loggingService = ls; }
-
     @Override
-    public void DisplayOutput(Program program) {
-        setLoggingService(LoggingService.getInstance());
+    public void run(Program program) {
+
+        //CPU Information
+
+        loggingService.setLogFile(SYSTEM_LOGS,SYSTEM_OUTPUT,false);
+        float clockFrequency = this.getClockFrequency(program,this);
+        float totalCount = this.getTotalInstructionCount(program,this);
+
         loggingService.setLogFile("UserActions/", "FileOutput.txt",false);
+        this.systemLog("Clock Frequency: "+clockFrequency+"\n");
+        this.systemLog("Total Instruction Count: "+totalCount+"\n");
 
-        float clockFrequency = program.getClockFrequency();
-        loggingService.log("Frequency: "+ clockFrequency);
-        logEvent(clockFrequency + deliminator);
-
-        int instructionCount = program.getTotalInstructionCount();
-        loggingService.log("Instruction Count: " + instructionCount);
-        logEvent(instructionCount+deliminator);
+        //Instruction Information
 
         for (InstructionType inst : program.getInstructions()) {
 
-            for (String info: inst.getinstructioninfo()) {
+            loggingService.setLogFile(SYSTEM_LOGS,SYSTEM_OUTPUT,true);
+            String type = this.getInstructionType(inst,this);
+            int count =this.getInstructionCount(inst,this);
+            float cpi = this.getInstructionCpi(inst,this);
+            float time = this.getInstructionExec(inst,this);
 
-                String[] message = info.split(": ");
-                loggingService.log(info);
-                logEvent(message[1]+deliminator);
-            }
+            loggingService.setLogFile("UserActions/", "FileOutput.txt",true);
+            this.systemLog("Type: "+type+" ");
+            this.systemLog("Count: "+count+" ");
+            this.systemLog("Cpi: "+cpi+" ");
+            this.systemLog("Exec Time: "+time+"\n");
         }
 
-        float averageCpi = Logic.calculateAverageCPI(program);
-        loggingService.log("CPI: " + averageCpi);
-        logEvent(averageCpi+deliminator);
 
-        float mipsRate = Logic.calculateMipsRate(program);
-        loggingService.log("MIPS Rate: " + mipsRate);
-        logEvent(mipsRate+deliminator);
+        //Results
+        loggingService.setLogFile(SYSTEM_LOGS,SYSTEM_OUTPUT,true);
+        float averageCpi = this.getAverageCpi(program,this);
+        float mipsRate = this.getMipsRate(program,this);
+        float executionTime = this.getExecTime(program,this);
 
-        float executionTime = Logic.calculateExecutionTime(program);
-        loggingService.log("Execution Time: " + executionTime);
-        logEvent(executionTime+deliminator);
+        loggingService.setLogFile("UserActions/", "FileOutput.txt",true);
+        this.systemLog("CPI: " + averageCpi);
+        this.systemLog("MIPS Rate: " + mipsRate);
+        this.systemLog("Execution Time: " + executionTime);
 
-        logEvent("\n");
     }
 }
