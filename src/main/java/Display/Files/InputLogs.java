@@ -16,8 +16,7 @@ public class InputLogs implements InputController, LoggingServiceInterface {
     public Program run() {
 
         ArrayList<String> data = (ArrayList<String>) loggingService.getLogData("UserActions/", "FileInput.txt");
-
-        this.setLogFile(SYSTEM_LOGS,SYSTEM_INPUT,false);
+        this.setLogFile(SYSTEM_LOGS, SYSTEM_INPUT, false);
 
         //CPU Information
 
@@ -27,18 +26,16 @@ public class InputLogs implements InputController, LoggingServiceInterface {
                 this
         );
 
-
         //Instruction Information
 
         //int numberOfInstructions = Integer.valueOf(data.get(2));
-
         ArrayList<InstructionType> fileInputInstructions = new ArrayList<>();
 
-        for (int i = 3; i < data.size(); i=i+3) {
+        for (int i = 3; i < data.size(); i = i + 3) {
             this.addInstruction(
                     data.get(i),
-                    data.get(i+1),
-                    data.get(i+2),
+                    data.get(i + 1),
+                    data.get(i + 2),
                     this
             );
         }

@@ -27,13 +27,16 @@ class MockInputLogsTest {
         Program programMock = new Program(50.0F, Frequency.decahertz,instructionTypes);
 
         //Mock
+        //Return programMock when InputLogs.run()
         InputLogs mockInputLogs = spy(InputLogs.class);
         when(mockInputLogs.run()).thenReturn(programMock);
-
+        //Use programMock in real output
         outputLogs.run(mockInputLogs.run());
 
         //Assert
+        //Assert logs contain 'FloatMock' from programMock
          assertEquals("FloatMock",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[2]);
+         //Assert logs contain correct data from outputLogs.run()
          assertEquals("720.0",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[12]);
 
     }

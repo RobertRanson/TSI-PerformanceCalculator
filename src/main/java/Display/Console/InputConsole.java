@@ -18,7 +18,7 @@ public class InputConsole implements InputController, LoggingServiceInterface {
     @Override
     public Program run() {
 
-        this.setLogFile(SYSTEM_LOGS,SYSTEM_INPUT,false);
+        this.setLogFile(SYSTEM_LOGS, SYSTEM_INPUT, false);
 
         //CPU Information
 
@@ -37,7 +37,7 @@ public class InputConsole implements InputController, LoggingServiceInterface {
 
         for (int i = 0; i < userInputNumberOfInst; i++) {
             System.out.println("------------------------------------");
-            System.out.println("Instruction: " + (i+1) + "/" + userInputNumberOfInst);
+            System.out.println("Instruction: " + (i + 1) + "/" + userInputNumberOfInst);
 
             this.addInstruction(
                     getInputString("Enter the name of the Instruction: "),
@@ -46,12 +46,10 @@ public class InputConsole implements InputController, LoggingServiceInterface {
                     this
             );
         }
-
         return (this.program);
-
     }
 
-    public String getInputString(String message){
+    public String getInputString(String message) {
         System.out.println(message);
         String result = userInput.nextLine();
         return result;

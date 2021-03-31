@@ -1,6 +1,5 @@
 package Display.JFrame;
 
-import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
 

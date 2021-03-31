@@ -29,7 +29,7 @@ public class RunCalculator {
                 outputController = new OutputConsole();
                 break;
             case GUI:
-                inputController  = new InputGUI();
+                inputController = new InputGUI();
                 outputController = new OutputGui();
                 break;
             default:
@@ -39,8 +39,8 @@ public class RunCalculator {
         program = inputController.run();
         try {
             outputController.run(program);
-        }catch (Exception e){
-            System.out.println("outputController.run: "+e);
+        } catch (Exception e) {
+            System.out.println("outputController.run: " + e);
         }
     }
 }

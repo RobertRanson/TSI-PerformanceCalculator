@@ -6,7 +6,6 @@ import Entities.InstructionType;
 import Entities.Program;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
 public class Logic {
 
@@ -62,13 +61,15 @@ public class Logic {
         return ((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
     }
 
-    public static float trimFloat(float input){
+    public static float trimFloat(float input) {
         return Float.valueOf(df.format(input));
     }
-    public static String floatToString(float fl){
+
+    public static String floatToString(float fl) {
         return df.format(fl);
     }
-    public static float stringToFloat(String st){
+
+    public static float stringToFloat(String st) {
         return trimFloat(Float.valueOf(st));
     }
 }

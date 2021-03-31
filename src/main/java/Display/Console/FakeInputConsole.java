@@ -6,7 +6,7 @@ public class FakeInputConsole extends InputConsole {
 
     ArrayList<String> fakeInputs = new ArrayList<>();
 
-    public FakeInputConsole(){
+    public FakeInputConsole() {
         fakeInputs.add("40");
         fakeInputs.add("decahertz");
         fakeInputs.add("2");
@@ -21,11 +21,11 @@ public class FakeInputConsole extends InputConsole {
 
     }
 
-
     public String getInputString(String message) {
         return fakeInputs.remove(0);
     }
-    public int getInputInt(String message){
+
+    public int getInputInt(String message) {
         return Integer.valueOf(getInputString(message));
     }
 }

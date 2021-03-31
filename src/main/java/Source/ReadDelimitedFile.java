@@ -11,14 +11,14 @@ public class ReadDelimitedFile {
     private String fileDelimitor = ",";
     private String filePathPrefix = DataSourceConstants.RESOURCE;
 
-    public void setFileDelimitor(String fileDelimitor){
+    public void setFileDelimitor(String fileDelimitor) {
         this.fileDelimitor = fileDelimitor;
     }
 
-    public List<String[]> getFileData(String directory, String fileName){
+    public List<String[]> getFileData(String directory, String fileName) {
         List<String[]> fileData = new ArrayList<String[]>();
         try {
-            File propertyFile = new File(filePathPrefix+ directory + fileName);
+            File propertyFile = new File(filePathPrefix + directory + fileName);
             System.out.println(propertyFile.getPath());
             Scanner propertyReader = new Scanner(propertyFile);
             while (propertyReader.hasNextLine()) {

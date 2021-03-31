@@ -18,25 +18,25 @@ public class LoggingServiceSingleton implements LoggingServiceInterface {
     private static LoggingServiceSingleton uniqueInstance;
 
     public static LoggingServiceSingleton getInstance() {
-        if (uniqueInstance==null) {
+        if (uniqueInstance == null) {
             uniqueInstance = new LoggingServiceSingleton();
         }
         return uniqueInstance;
     }
 
+    private LoggingServiceSingleton() {
+    }
 
-    private LoggingServiceSingleton(){ }
-
-    public void setLogDelimitor(String logDelimitor){
+    public void setLogDelimitor(String logDelimitor) {
         this.logDelimitor = logDelimitor;
     }
 
-    public List<String> getLogData(String directory, String fileName){
+    public List<String> getLogData(String directory, String fileName) {
 
         List<String> logData = new ArrayList<String>();
 
         try {
-            File propertyFile = new File(filePathPrefix+ directory + fileName);
+            File propertyFile = new File(filePathPrefix + directory + fileName);
             Scanner propertyReader = new Scanner(propertyFile);
             System.out.println(propertyFile.getPath());
             while (propertyReader.hasNextLine()) {
@@ -53,10 +53,10 @@ public class LoggingServiceSingleton implements LoggingServiceInterface {
         return logData;
     }
 
-    public void setLogFile(String directory, String fileName, boolean appendToFile){
+    public void setLogFile(String directory, String fileName, boolean appendToFile) {
 
         try {
-            fileWriter = new FileWriter(filePathPrefix + directory+ fileName, appendToFile);
+            fileWriter = new FileWriter(filePathPrefix + directory + fileName, appendToFile);
 
         } catch (IOException ioExp) {
             System.out.println("An error occurred.");
@@ -64,7 +64,7 @@ public class LoggingServiceSingleton implements LoggingServiceInterface {
         }
     }
 
-    public void log(String message){
+    public void log(String message) {
 
         try {
             fileWriter.write(message);
