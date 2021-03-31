@@ -1,6 +1,6 @@
 Clock Frequency: 4.0E7
 Total Instruction Count: 140000.0
-Type: ControlLogs Count: 100000 Cpi: 2.0 Exec Time: 0.0
-Type: Float Count: 10000 Cpi: 4.0 Exec Time: 0.0
-Type: Branch Count: 30000 Cpi: 8.0 Exec Time: 0.0
+Type: ControlLogs Count: 100000 Cpi: 2.0 Exec Time: 0.005
+Type: Float Count: 10000 Cpi: 4.0 Exec Time: 0.001
+Type: Branch Count: 30000 Cpi: 8.0 Exec Time: 0.006
 CPI: 3.4285714285714284MIPS Rate: 11.666666666666666Execution Time: 0.012

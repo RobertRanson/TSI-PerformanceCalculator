@@ -15,8 +15,8 @@ public class InstructionType {
         setCyclesPerInstruction(cyclesPerInstruction);
     }
 
-    public void calculateExecutionTime(double clockFrequency) {
-        setExecutionTime((clockFrequency * this.cyclesPerInstruction * this.instructionCount));
+    public void calculateExecutionTime(double clockSpeed) {
+        setExecutionTime((clockSpeed * this.cyclesPerInstruction * this.instructionCount));
     }
 
     public double getExecutionTime() {

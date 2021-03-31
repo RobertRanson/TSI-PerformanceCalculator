@@ -39,6 +39,7 @@ public interface OutputController {
 
     default double getInstructionExec(InstructionType instructionType, LoggingServiceInterface self) {
         double time = instructionType.getExecutionTime();
+        doubleToString(time);
         self.systemLog(time + delimiter);
         return time;
     }
@@ -59,6 +60,11 @@ public interface OutputController {
         double time = Logic.calculateExecutionTime(program);
         self.systemLog(time + delimiter);
         return time;
+    }
+
+    default String doubleToString(double input){
+        String output = String.format("%.3f",input);
+        return output;
     }
 
     void run(Program program);

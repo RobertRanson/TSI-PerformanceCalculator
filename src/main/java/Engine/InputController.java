@@ -28,7 +28,10 @@ public interface InputController {
         self.systemLog(type + delimiter);
         self.systemLog(instCount + delimiter);
         self.systemLog(instCpi + delimiter);
-        program.addInstruction(new InstructionType(type, instCount, instCpi));
+
+        InstructionType newInst = new InstructionType(type, instCount, instCpi);
+        newInst.calculateExecutionTime(Logic.frequencyToPeriod(program.getClockFrequency(), Frequency.hertz));
+        program.addInstruction(newInst);
     }
 
     default double stringTodouble(String string) {
