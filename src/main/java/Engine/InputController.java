@@ -6,6 +6,8 @@ import Entities.Program;
 import Source.LoggingServiceInterface;
 import Utilities.ErrorLogging;
 
+import java.util.ArrayList;
+
 public interface InputController {
 
     String delimiter = ",";
@@ -17,6 +19,7 @@ public interface InputController {
         self.systemLog(clockFrequency+delimiter);
         self.systemLog(units+delimiter);
         program.setClockFrequency(clockFrequency,units);
+        program.setInstructions(new ArrayList<>());
     }
 
     default void addInstruction(String type, String count, String cpi, LoggingServiceInterface self){

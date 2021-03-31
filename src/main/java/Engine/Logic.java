@@ -39,20 +39,17 @@ public class Logic {
     }
 
     public static double calculateAverageCPI(Program program) {
-        ArrayList<InstructionType> allInstructions = program.getInstructions();
         double sum = 0;
-        for (InstructionType instruction : allInstructions) {
+        for (InstructionType instruction : program.getInstructions()) {
             sum += instruction.getCyclesPerInstruction() * instruction.getInstructionCount();
         }
         return (sum / program.getTotalInstructionCount());
     }
 
     public static double calculateExecutionTime(Program program) {
-        ArrayList<InstructionType> allInstructions = program.getInstructions();
         double runtime = 0;
         double clockTime = frequencyToPeriod(program.getClockFrequency(), Frequency.hertz);
-        for (InstructionType instruction : allInstructions) {
-            System.out.println(instruction.toString());
+        for (InstructionType instruction : program.getInstructions()) {
             instruction.calculateExecutionTime(clockTime);
             runtime += instruction.getExecutionTime();
         }
@@ -60,12 +57,12 @@ public class Logic {
     }
 
     public static double calculateMipsRate(Program program) {
-        System.out.println(program.getTotalInstructionCount()+" / "+ Logic.calculateExecutionTime(program));
+        System.out.println(program.toString());
+        System.out.println((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
         return ((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
     }
 
     public static float trimFloat(float input){
-        System.out.println("trimFloat: " + input);
         return Float.valueOf(df.format(input));
     }
     public static String floatToString(float fl){

@@ -1,21 +1,32 @@
 package Engine;
 
 import Display.Files.InputStub;
+import Engine.InputController;
+import Engine.Logic;
 import Entities.Frequency;
 import Entities.Program;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LogicTest {
+class LogicTests {
 
-    //Stub Test using adapter
-    InputController input = new InputStub();
+    //Stub Test
+
+    Program getProgram(){
+        InputController input = new InputStub();
+        Program program = input.run();
+        return program;
+    }
+
 
     @Test
     void calculateAverageCPI() {
-        Program program = input.run();
-        double cpi = Logic.calculateAverageCPI(program);
+        //using stub
+
+
+        double cpi = Logic.calculateAverageCPI(getProgram());
+
         assertEquals(1.375,cpi);
     }
 
@@ -43,13 +54,13 @@ class LogicTest {
 
     @Test
     void calculateExecutionTime() {
-        Program program = input.run();
-        assertEquals(0.550000,Logic.calculateExecutionTime(program),0.0001);
+
+        assertEquals(0.550000,Logic.calculateExecutionTime(getProgram()),0.0001);
     }
 
     @Test
     void calculateMipsRate() {
-        Program program = input.run();
-        assertEquals(0.029090,Logic.calculateMipsRate(program),0.0001);
+
+        assertEquals(0.029090,Logic.calculateMipsRate(getProgram()),0.0001);
     }
 }

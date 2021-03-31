@@ -14,12 +14,13 @@ import static Source.DataSourceConstants.*;
 
 class FakeTest {
 
-    ReadDelimitedFile readDelimitedFile = new ReadDelimitedFile();
+
 
     @Test
     void fakeTest(){
         //Input = fake class that returns values from array
         InputController input = new FakeInputConsole();
+        ReadDelimitedFile readDelimitedFile = new ReadDelimitedFile();
 
         //Output = testOutput which runs without displaying anything (system logs are still used)
         OutputController output = new TestOutput();

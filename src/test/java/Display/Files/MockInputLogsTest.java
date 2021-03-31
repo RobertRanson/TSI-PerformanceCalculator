@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
-class InputLogsTest {
+class MockInputLogsTest {
 
-    ReadDelimitedFile readDelimitedFile = new ReadDelimitedFile();
     @Test
     void displayOutputMock() {
 
         //Setup
+        ReadDelimitedFile readDelimitedFile = new ReadDelimitedFile();
         OutputLogs outputLogs = new OutputLogs();
 
         ArrayList<InstructionType> instructionTypes = new ArrayList<>();

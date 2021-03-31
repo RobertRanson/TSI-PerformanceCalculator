@@ -37,5 +37,6 @@
 * InputLogsTest
 
 ## Doubling Fake
+* Display.Console.FakeInputConsole
 * Display.Files.TestOutput
 * FakeTest
