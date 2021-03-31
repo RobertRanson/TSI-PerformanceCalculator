@@ -7,6 +7,8 @@
   * Name
   * Instruction count
   * Cycles per instruction
+
+![GUI Screenshot](https://i.imgur.com/rvE25kM.png)
     
 #### Outputs
 * Clock Speed Hz
@@ -19,6 +21,8 @@
 * Average Cycles per instruction
 * MIPS (Million instructions per second) rate
 * Program execution time
+
+![GUI Screenshot](https://i.imgur.com/rUfgFWM.png)
 
 ## Source input/output
 * Console
