@@ -29,7 +29,7 @@
 * Display.Files.TestOutput
 * Display.Files.InputStub
 
-## Doubling Stub
+## Doubling Stub and Unit tests
 * Display.Files.InputStub
 * LogicTest
 
