@@ -9,9 +9,15 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+This class contains unit tests for the core logic of the program
+It uses the stub class InputStub which implements the
+InputController interface.
+
+ */
+
 class LogicTests {
 
-    //Stub Test
 
     Program getProgram(){
         InputController input = new InputStub();
@@ -21,18 +27,14 @@ class LogicTests {
 
 
     @Test
-    void calculateAverageCPI() {
-        //using stub
-
-
+    void calculateAverageCPITest() {
         double cpi = Logic.calculateAverageCPI(getProgram());
-
         assertEquals(1.375,cpi);
     }
 
 
     @Test
-    void frequencyToHertz() {
+    void frequencyToHertzTest() {
         Frequency frequency1 = Frequency.kilohertz;
         Frequency frequency2 = Frequency.hertz;
 
@@ -42,7 +44,7 @@ class LogicTests {
     }
 
     @Test
-    void frequencyToPeriod() {
+    void frequencyToPeriodTest() {
         Frequency frequency1 = Frequency.kilohertz;
         Frequency frequency2 = Frequency.hertz;
 
@@ -53,14 +55,12 @@ class LogicTests {
 
 
     @Test
-    void calculateExecutionTime() {
-
+    void calculateExecutionTimeTest() {
         assertEquals(0.550000,Logic.calculateExecutionTime(getProgram()),0.0001);
     }
 
     @Test
-    void calculateMipsRate() {
-
+    void calculateMipsRateTest() {
         assertEquals(0.029090,Logic.calculateMipsRate(getProgram()),0.0001);
     }
 }

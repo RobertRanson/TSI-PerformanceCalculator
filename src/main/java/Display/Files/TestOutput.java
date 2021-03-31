@@ -8,6 +8,14 @@ import Source.LoggingServiceInterface;
 import static Source.DataSourceConstants.SYSTEM_LOGS;
 import static Source.DataSourceConstants.SYSTEM_OUTPUT;
 
+/*
+This class is created for testing only.
+It implements the OutputController interface and its
+required method run(). It is designed to work the same
+as other classes that implement OutputController by utilising
+the logging service, but without displaying to user.
+ */
+
 public class TestOutput implements OutputController, LoggingServiceInterface {
 
     @Override

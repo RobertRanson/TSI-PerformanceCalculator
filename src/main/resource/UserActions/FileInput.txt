@@ -1,7 +1,7 @@
 40
 megahertz
 3
-Control
+ControlLogs
 100000
 2
 Float

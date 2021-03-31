@@ -14,6 +14,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+/*
+This test mocks the class InputLogs.
+It creates a Program type which is returned when
+the abstract InputController.run()
+The class OutputLogs implements the OutputController and
+utilises core program logic.
+Then assert system logs match the mock inputs and that
+system logs contain correct output
+ */
+
 class MockInputLogsTest {
 
     @Test
@@ -34,6 +44,8 @@ class MockInputLogsTest {
         when(mockInputLogs.run()).thenReturn(programMock);
         //Use programMock in real output
         outputLogs.run(mockInputLogs.run());
+
+        //Example of over testing v v v
 
         //Assert
         //Assert logs contain 'FloatMock' from programMock

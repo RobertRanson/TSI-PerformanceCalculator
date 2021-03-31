@@ -2,6 +2,12 @@ package Display.Console;
 
 import java.util.ArrayList;
 
+/*
+This is a class that fakes InputConsole.
+it overwrites InputConsole.getString()
+which is used in InputConsole to read from the terminal.
+ */
+
 public class FakeInputConsole extends InputConsole {
 
     ArrayList<String> fakeInputs = new ArrayList<>();

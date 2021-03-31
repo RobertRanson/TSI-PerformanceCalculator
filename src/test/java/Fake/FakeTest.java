@@ -1,20 +1,26 @@
 package Fake;
 
 import Display.Console.FakeInputConsole;
-import Display.Files.InputStub;
 import Display.Files.TestOutput;
 import Engine.InputController;
 import Engine.OutputController;
 import Entities.Program;
 import Source.ReadDelimitedFile;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static Source.DataSourceConstants.*;
 
+/*
+This test fakes user input using the InputController
+interface.
+The class TestOutput implements the OutputController interface,
+this class utilises core program logic and does not display anything.
+
+The assert check system output logs match the return value of the
+method getTotalInstructionCount (this method uses core logic)
+ */
+
 class FakeTest {
-
-
 
     @Test
     void fakeTest(){
