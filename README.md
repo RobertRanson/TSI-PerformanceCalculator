@@ -22,7 +22,7 @@
 * MIPS (Million instructions per second) rate
 * Program execution time
 
-![GUI Screenshot](https://i.imgur.com/Eks3buA.png)
+![GUI Screenshot](https://i.imgur.com/rUfgFWM.png)
 
 ## Source input/output
 * Console
