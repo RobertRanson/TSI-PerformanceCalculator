@@ -53,7 +53,7 @@ public class OutputGuiBuilder extends JPanel {
                     outputGUI.getInstructionType(inst,outputGUI),
                     outputGUI.getInstructionCount(inst,outputGUI),
                     outputGUI.getInstructionCpi(inst,outputGUI),
-                    outputGUI.getInstructionExec(inst,outputGUI)
+                    outputGUI.getInstructionExec(program,inst,outputGUI)
             });
         }
 

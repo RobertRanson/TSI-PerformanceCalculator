@@ -20,7 +20,7 @@ public class TestOutput implements OutputController, LoggingServiceInterface {
             this.getInstructionType(inst,this);
             this.getInstructionCount(inst,this);
             this.getInstructionCpi(inst,this);
-            this.getInstructionExec(inst,this);
+            this.getInstructionExec(program, inst,this);
         }
         this.getAverageCpi(program,this);
         this.getMipsRate(program,this);

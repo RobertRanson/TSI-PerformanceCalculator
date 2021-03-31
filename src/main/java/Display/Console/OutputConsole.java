@@ -24,7 +24,7 @@ public class OutputConsole implements LoggingServiceInterface, OutputController 
             System.out.println("Type: " + this.getInstructionType(inst,this));
             System.out.println("Count: " + this.getInstructionCount(inst,this));
             System.out.println("CPI: " + this.getInstructionCpi(inst,this));
-            System.out.println("Exec Time: " + this.getInstructionExec(inst,this));
+            System.out.println("Exec Time: " + this.getInstructionExec(program,inst,this));
         }
 
         //Results

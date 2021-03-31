@@ -12,7 +12,7 @@ public interface InputController {
     Program program = new Program();
 
     default void setClockFrequency(String inputFreq, String inputUnits, LoggingServiceInterface self){
-        float clockFrequency = Float.parseFloat(inputFreq);
+        double clockFrequency =  stringTodouble(inputFreq);
         Frequency units = Frequency.valueOf(inputUnits);
         self.systemLog(clockFrequency+delimiter);
         self.systemLog(units+delimiter);
@@ -28,12 +28,12 @@ public interface InputController {
         program.addInstruction(new InstructionType(type,instCount,instCpi));
     }
 
-    default float stringToFloat(String string){
-        float result = 0;
+    default double stringTodouble(String string){
+        double result = 0;
         try {
-            result = Float.valueOf(string);
+            result = Double.valueOf(string);
         }catch (Exception e){
-            ErrorLogging.getInstance().writeToLog("stringToFloat", e.getMessage());
+            ErrorLogging.getInstance().writeToLog("stringTodouble" , e.getMessage());
         }finally {
             return result;
         }

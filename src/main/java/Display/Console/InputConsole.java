@@ -58,8 +58,7 @@ public class InputConsole implements InputController, LoggingServiceInterface {
     }
 
     public int getInputInt(String message) {
-        System.out.println(message);
-        int result = Integer.parseInt(userInput.nextLine());
+        int result = Integer.parseInt(getInputString(message));
         return result;
     }
 }

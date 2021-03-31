@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 public class Program {
 
-    private float clockFrequency;
+    private double clockFrequency;
     private int totalInstructionCount;
     private ArrayList<InstructionType> instructions = new ArrayList<InstructionType>();
 
     public Program() {}
-    public Program(float clockFrequency, Frequency units, ArrayList<InstructionType> instructions){
+    public Program(double clockFrequency, Frequency units, ArrayList<InstructionType> instructions){
         setClockFrequency(clockFrequency,units);
         setInstructions(instructions);
         calculateTotalInstructionCount();
@@ -30,8 +30,8 @@ public class Program {
     }
     public ArrayList<InstructionType> getInstructions() { return instructions; }
 
-    public float getClockFrequency() { return clockFrequency; }
-    public void setClockFrequency(float clockFrequency, Frequency units) { this.clockFrequency = Logic.frequencyToHertz(units,clockFrequency); }
+    public double getClockFrequency() { return clockFrequency; }
+    public void setClockFrequency(double clockFrequency, Frequency units) { this.clockFrequency = Logic.frequencyToHertz(units,clockFrequency); }
 
     public void setTotalInstructionCount(int totalInstructionCount) { this.totalInstructionCount = totalInstructionCount; }
 

@@ -29,10 +29,12 @@ class InputLogsTest {
         //Mock
         InputLogs mockInputLogs = spy(InputLogs.class);
         when(mockInputLogs.run()).thenReturn(programMock);
+
         outputLogs.run(mockInputLogs.run());
 
         //Assert
          assertEquals("FloatMock",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[2]);
          assertEquals("720.0",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[12]);
+
     }
 }

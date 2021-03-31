@@ -4,7 +4,6 @@ package Engine;
 import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
-import org.sqlite.date.DateFormatUtils;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -13,8 +12,8 @@ public class Logic {
 
     private static DecimalFormat df = new DecimalFormat("##.######");
 
-    public static float frequencyToHertz(Frequency currentUnits, float currentValue) {
-        float returnValue = currentValue;
+    public static double frequencyToHertz(Frequency currentUnits, double currentValue) {
+        double returnValue = currentValue;
         switch (currentUnits) {
             case decahertz:
                 returnValue *= 10;
@@ -32,38 +31,41 @@ public class Logic {
             default:
                 break;
         }
-        return trimFloat(returnValue);
+        return (returnValue);
     }
 
-    public static float frequencyToPeriod(float currentFrequency, Frequency currentUnits) {
-        return trimFloat(1 / frequencyToHertz(currentUnits, currentFrequency));
+    public static double frequencyToPeriod(double currentFrequency, Frequency currentUnits) {
+        return (1 / frequencyToHertz(currentUnits, currentFrequency));
     }
 
-    public static float calculateAverageCPI(Program program) {
+    public static double calculateAverageCPI(Program program) {
         ArrayList<InstructionType> allInstructions = program.getInstructions();
-        float sum = 0;
+        double sum = 0;
         for (InstructionType instruction : allInstructions) {
             sum += instruction.getCyclesPerInstruction() * instruction.getInstructionCount();
         }
-        return trimFloat(sum / program.getTotalInstructionCount());
+        return (sum / program.getTotalInstructionCount());
     }
 
-    public static float calculateExecutionTime(Program program) {
+    public static double calculateExecutionTime(Program program) {
         ArrayList<InstructionType> allInstructions = program.getInstructions();
-        float runtime = 0;
-        float clockTime = frequencyToPeriod(program.getClockFrequency(), Frequency.hertz);
+        double runtime = 0;
+        double clockTime = frequencyToPeriod(program.getClockFrequency(), Frequency.hertz);
         for (InstructionType instruction : allInstructions) {
+            System.out.println(instruction.toString());
             instruction.calculateExecutionTime(clockTime);
             runtime += instruction.getExecutionTime();
         }
-        return trimFloat(runtime);
+        return (runtime);
     }
 
-    public static float calculateMipsRate(Program program) {
-        return trimFloat((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
+    public static double calculateMipsRate(Program program) {
+        System.out.println(program.getTotalInstructionCount()+" / "+ Logic.calculateExecutionTime(program));
+        return ((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
     }
 
     public static float trimFloat(float input){
+        System.out.println("trimFloat: " + input);
         return Float.valueOf(df.format(input));
     }
     public static String floatToString(float fl){

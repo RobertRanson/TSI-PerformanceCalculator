@@ -7,7 +7,7 @@ public class InstructionType {
     private String type;
     private int instructionCount;
     private int cyclesPerInstruction;
-    private float executionTime;
+    private double executionTime;
 
     public InstructionType(String type, int instructionCount, int cyclesPerInstruction){
         setType(type);
@@ -15,12 +15,12 @@ public class InstructionType {
         setCyclesPerInstruction(cyclesPerInstruction);
     }
 
-    public void calculateExecutionTime(float clockFrequency){
+    public void calculateExecutionTime(double clockFrequency){
         setExecutionTime((clockFrequency * this.cyclesPerInstruction * this.instructionCount));
     }
 
-    public float getExecutionTime() { return executionTime; }
-    public void setExecutionTime(float executionTime) { this.executionTime = executionTime; }
+    public double getExecutionTime() { return executionTime; }
+    public void setExecutionTime(double executionTime) { this.executionTime = executionTime; }
 
     public String getType() { return type; }
     public void setType(String type) { this.type = type; }
@@ -40,5 +40,11 @@ public class InstructionType {
         output.add("Execution time: " + getExecutionTime());
 
         return output;
+    }
+    public String toString(){
+        return (        "\nType: " + getType() +
+                        "\nInstruction Count: " + getInstructionCount() +
+                        "\nCPI: " + getCyclesPerInstruction()+
+                        "\nExecution time: " + getExecutionTime());
     }
 }

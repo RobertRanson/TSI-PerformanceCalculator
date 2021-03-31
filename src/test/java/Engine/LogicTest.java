@@ -15,7 +15,7 @@ class LogicTest {
     @Test
     void calculateAverageCPI() {
         Program program = input.run();
-        float cpi = Logic.calculateAverageCPI(program);
+        double cpi = Logic.calculateAverageCPI(program);
         assertEquals(1.375,cpi);
     }
 
@@ -25,9 +25,9 @@ class LogicTest {
         Frequency frequency1 = Frequency.kilohertz;
         Frequency frequency2 = Frequency.hertz;
 
-        float magnitude = 0.5F;
-        assertEquals(500F,Logic.frequencyToHertz(frequency1,magnitude));
-        assertEquals(0.5F,Logic.frequencyToHertz(frequency2,magnitude));
+        double magnitude = 0.5d;
+        assertEquals(500d,Logic.frequencyToHertz(frequency1,magnitude));
+        assertEquals(0.5d,Logic.frequencyToHertz(frequency2,magnitude));
     }
 
     @Test
@@ -35,9 +35,9 @@ class LogicTest {
         Frequency frequency1 = Frequency.kilohertz;
         Frequency frequency2 = Frequency.hertz;
 
-        float magnitude = 1F;
-        assertEquals((1f/1000), Logic.frequencyToPeriod(magnitude,frequency1));
-        assertEquals((1F), Logic.frequencyToPeriod(magnitude,frequency2));
+        double magnitude = 1d;
+        assertEquals((1d/1000), Logic.frequencyToPeriod(magnitude,frequency1));
+        assertEquals((1d), Logic.frequencyToPeriod(magnitude,frequency2));
     }
 
 

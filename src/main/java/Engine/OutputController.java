@@ -8,8 +8,8 @@ public interface OutputController {
     String delimiter = ",";
 
 
-   default float getClockFrequency(Program program, LoggingServiceInterface self){
-       float clockFrequency = program.getClockFrequency();
+   default double getClockFrequency(Program program, LoggingServiceInterface self){
+       double clockFrequency = program.getClockFrequency();
        self.systemLog(clockFrequency+delimiter);
         return clockFrequency;
    }
@@ -32,31 +32,31 @@ public interface OutputController {
        return count;
    }
 
-   default float getInstructionCpi(InstructionType instructionType, LoggingServiceInterface self){
-       float cpi = instructionType.getCyclesPerInstruction();
+   default double getInstructionCpi(InstructionType instructionType, LoggingServiceInterface self){
+       double cpi = instructionType.getCyclesPerInstruction();
        self.systemLog(cpi+delimiter);
        return cpi;
    }
 
-   default float getInstructionExec(InstructionType instructionType, LoggingServiceInterface self){
-       float time = instructionType.getExecutionTime();
+   default double getInstructionExec(Program program, InstructionType instructionType, LoggingServiceInterface self){
+       double time = instructionType.getExecutionTime();
        self.systemLog(time+delimiter);
        return time;
    }
 
-   default float getAverageCpi(Program program, LoggingServiceInterface self){
-       float cpi = Logic.calculateAverageCPI(program);
+   default double getAverageCpi(Program program, LoggingServiceInterface self){
+       double cpi = Logic.calculateAverageCPI(program);
        self.systemLog(cpi+delimiter);
        return cpi;
    }
 
-    default float getMipsRate(Program program, LoggingServiceInterface self){
-        float mips = Logic.calculateMipsRate(program);
+    default double getMipsRate(Program program, LoggingServiceInterface self){
+        double mips = Logic.calculateMipsRate(program);
         self.systemLog(mips+delimiter);
         return mips;
     }
-    default float getExecTime(Program program, LoggingServiceInterface self){
-        float time = Logic.calculateExecutionTime(program);
+    default double getExecTime(Program program, LoggingServiceInterface self){
+        double time = Logic.calculateExecutionTime(program);
         self.systemLog(time+delimiter);
         return time;
     }

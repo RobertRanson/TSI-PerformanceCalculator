@@ -18,8 +18,8 @@ public class OutputLogs implements OutputController, LoggingServiceInterface {
         //CPU Information
 
         loggingService.setLogFile(SYSTEM_LOGS,SYSTEM_OUTPUT,false);
-        float clockFrequency = this.getClockFrequency(program,this);
-        float totalCount = this.getTotalInstructionCount(program,this);
+        double clockFrequency = this.getClockFrequency(program,this);
+        double totalCount = this.getTotalInstructionCount(program,this);
 
         loggingService.setLogFile("UserActions/", "FileOutput.txt",false);
         this.systemLog("Clock Frequency: "+clockFrequency+"\n");
@@ -32,8 +32,8 @@ public class OutputLogs implements OutputController, LoggingServiceInterface {
             loggingService.setLogFile(SYSTEM_LOGS,SYSTEM_OUTPUT,true);
             String type = this.getInstructionType(inst,this);
             int count =this.getInstructionCount(inst,this);
-            float cpi = this.getInstructionCpi(inst,this);
-            float time = this.getInstructionExec(inst,this);
+            double cpi = this.getInstructionCpi(inst,this);
+            double time = this.getInstructionExec(program, inst,this);
 
             loggingService.setLogFile("UserActions/", "FileOutput.txt",true);
             this.systemLog("Type: "+type+" ");
@@ -45,9 +45,9 @@ public class OutputLogs implements OutputController, LoggingServiceInterface {
 
         //Results
         loggingService.setLogFile(SYSTEM_LOGS,SYSTEM_OUTPUT,true);
-        float averageCpi = this.getAverageCpi(program,this);
-        float mipsRate = this.getMipsRate(program,this);
-        float executionTime = this.getExecTime(program,this);
+        double averageCpi = this.getAverageCpi(program,this);
+        double mipsRate = this.getMipsRate(program,this);
+        double executionTime = this.getExecTime(program,this);
 
         loggingService.setLogFile("UserActions/", "FileOutput.txt",true);
         this.systemLog("CPI: " + averageCpi);
