@@ -56,8 +56,6 @@ public class Logic {
     }
 
     public static double calculateMipsRate(Program program) {
-        System.out.println(program.toString());
-        System.out.println((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
         return ((program.getTotalInstructionCount() / (Logic.calculateExecutionTime(program) * 1000000)));
     }
 

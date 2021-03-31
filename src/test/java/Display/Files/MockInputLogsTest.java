@@ -1,5 +1,7 @@
 package Display.Files;
 
+import Engine.InputController;
+import Engine.OutputController;
 import Entities.Frequency;
 import Entities.InstructionType;
 import Entities.Program;
@@ -19,7 +21,7 @@ class MockInputLogsTest {
 
         //Setup
         ReadDelimitedFile readDelimitedFile = new ReadDelimitedFile();
-        OutputLogs outputLogs = new OutputLogs();
+        OutputController outputLogs = new OutputLogs();
 
         ArrayList<InstructionType> instructionTypes = new ArrayList<>();
         instructionTypes.add(new InstructionType("FloatMock",100000,2));
@@ -28,7 +30,7 @@ class MockInputLogsTest {
 
         //Mock
         //Return programMock when InputLogs.run()
-        InputLogs mockInputLogs = spy(InputLogs.class);
+        InputController mockInputLogs = spy(InputLogs.class);
         when(mockInputLogs.run()).thenReturn(programMock);
         //Use programMock in real output
         outputLogs.run(mockInputLogs.run());
