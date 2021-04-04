@@ -63,7 +63,7 @@ public interface OutputController {
     }
 
     default String doubleToString(double input){
-        String output = String.format("%.3f",input);
+        String output = String.format("%.6f",input);
         return output;
     }
 

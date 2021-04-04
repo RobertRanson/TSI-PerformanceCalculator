@@ -29,7 +29,6 @@ public class OutputGuiBuilder extends JPanel {
     public OutputGuiBuilder(Program program, OutputGui outputGUI) {
         this.setLayout(new BorderLayout());
 
-
         //CPU Information
 
         JPanel cpuInformation = new JPanel();
@@ -52,7 +51,7 @@ public class OutputGuiBuilder extends JPanel {
                     outputGUI.getInstructionType(inst, outputGUI),
                     outputGUI.getInstructionCount(inst, outputGUI),
                     outputGUI.getInstructionCpi(inst, outputGUI),
-                    outputGUI.getInstructionExec(inst, outputGUI)
+                    outputGUI.doubleToString(outputGUI.getInstructionExec(inst, outputGUI))+" s"
             });
         }
 
@@ -72,9 +71,9 @@ public class OutputGuiBuilder extends JPanel {
         JPanel results = new JPanel();
         results.setLayout(new BoxLayout(results, BoxLayout.PAGE_AXIS));
 
-        results.add(new JLabel("Average CPI: " + outputGUI.getAverageCpi(program, outputGUI)));
-        results.add(new JLabel("MIPS: " + outputGUI.getMipsRate(program, outputGUI)));
-        results.add(new JLabel("Execution Time: " + outputGUI.getExecTime(program, outputGUI) + " (s)"));
+        results.add(new JLabel("Average CPI: " + outputGUI.doubleToString(outputGUI.getAverageCpi(program, outputGUI))));
+        results.add(new JLabel("MIPS: " + outputGUI.doubleToString(outputGUI.getMipsRate(program, outputGUI))));
+        results.add(new JLabel("Execution Time: " + outputGUI.doubleToString(outputGUI.getExecTime(program, outputGUI) )+ " (s)"));
 
         results.setAlignmentX(Component.CENTER_ALIGNMENT);
         results.setBorder(BorderFactory.createTitledBorder("RESULTS"));
