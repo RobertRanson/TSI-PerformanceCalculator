@@ -37,10 +37,9 @@ public class RunCalculator {
         }
 
         program = inputController.run();
-        try {
-            outputController.run(program);
-        } catch (Exception e) {
-            System.out.println("outputController.run: " + e);
-        }
+
+        //Quick fix for issue
+        //https://github.com/RobertRanson/TSI-PerformanceCalculator/issues/5
+        if ((displayMethod != EnumSource.GUI)) { outputController.run(program); }
     }
 }
