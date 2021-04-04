@@ -23,7 +23,7 @@ public class OutputLogs implements OutputController, LoggingServiceInterface {
 
         loggingService.setLogFile("UserActions/", "FileOutput.txt", false);
         this.systemLog("Clock Frequency: " + clockFrequency + "\n");
-        this.systemLog("Total Instruction Count: " + totalCount + "\n");
+        this.systemLog("Total Instruction Count: " + totalCount + "\n\n");
 
         //Instruction Information
 
@@ -36,23 +36,25 @@ public class OutputLogs implements OutputController, LoggingServiceInterface {
             double time = this.getInstructionExec(inst, this);
 
             loggingService.setLogFile("UserActions/", "FileOutput.txt", true);
-            this.systemLog("Type: " + type + " ");
-            this.systemLog("Count: " + count + " ");
-            this.systemLog("Cpi: " + cpi + " ");
-            this.systemLog("Exec Time: " + time + "\n");
+            this.systemLog("[Type: " + type + "] ");
+            this.systemLog("[Count: " + count + "] ");
+            this.systemLog("[Cpi: " + cpi + "] ");
+            this.systemLog("[Exec Time: " + time + "]\n");
         }
 
 
-        //Results
+        //get results and set logging service to system logs
         loggingService.setLogFile(SYSTEM_LOGS, SYSTEM_OUTPUT, true);
         double averageCpi = this.getAverageCpi(program, this);
         double mipsRate = this.getMipsRate(program, this);
         double executionTime = this.getExecTime(program, this);
 
+
+        //use same logging service for file output
         loggingService.setLogFile("UserActions/", "FileOutput.txt", true);
-        this.systemLog("CPI: " + averageCpi);
-        this.systemLog("MIPS Rate: " + mipsRate);
-        this.systemLog("Execution Time: " + executionTime);
+        this.systemLog("\nCPI: " + averageCpi);
+        this.systemLog("\nMIPS Rate: " + mipsRate);
+        this.systemLog("\nExecution Time: " + executionTime);
 
     }
 }
