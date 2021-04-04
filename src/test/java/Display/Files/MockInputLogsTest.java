@@ -7,12 +7,14 @@ import Entities.InstructionType;
 import Entities.Program;
 import Source.ReadDelimitedFile;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.verification.Times;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /*
 This test mocks the class InputLogs.
@@ -36,22 +38,21 @@ class MockInputLogsTest {
         ArrayList<InstructionType> instructionTypes = new ArrayList<>();
         instructionTypes.add(new InstructionType("FloatMock",100000,2));
         instructionTypes.add(new InstructionType("Control",20000,8));
-        Program programMock = new Program(50.0F, Frequency.decahertz,instructionTypes);
+        Program mockData = new Program(50.0F, Frequency.decahertz,instructionTypes);
 
         //Mock
-        //Return programMock when InputLogs.run()
+        //Return mockData when InputLogs.run()
         InputController mockInputLogs = spy(InputLogs.class);
-        when(mockInputLogs.run()).thenReturn(programMock);
-        //Use programMock in real output
+        when(mockInputLogs.run()).thenReturn(mockData);
+
+        //Use mockData in OutputLogs
         outputLogs.run(mockInputLogs.run());
 
         //Example of over testing v v v
-
-        //Assert
-        //Assert logs contain 'FloatMock' from programMock
-         assertEquals("FloatMock",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[2]);
-         //Assert logs contain correct data from outputLogs.run()
-         assertEquals("720.0",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[12]);
-
+        //Assert logs contain 'FloatMock' from mockData & data from outputLogs.run()
+        assertAll("Should return 1st instruction type and total exec time",
+                () -> assertEquals("FloatMock",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[2]),
+                () -> assertEquals("720.0",readDelimitedFile.getFileData("SystemLogs/","systemOutputLog.csv").get(0)[12]),
+                () -> verify(mockInputLogs,times(2)).run());
     }
 }
