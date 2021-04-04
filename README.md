@@ -41,6 +41,7 @@
 * InputLogsTest
 
 ## Doubling Fake
-* Display.Console.FakeInputConsole
+* resource.SystemLogs.systemInputLog
+* resource.SystemLogs.systemOutputLog
 * Display.Files.TestOutput
 * FakeTest
