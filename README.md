@@ -38,6 +38,7 @@
 * LogicTest
 
 ## Doubling Mock
+* Display.Files.InputLogs
 * InputLogsTest
 
 ## Doubling Fake
